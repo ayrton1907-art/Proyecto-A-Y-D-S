@@ -1,54 +1,130 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/style_forms.css">
-    <link rel="stylesheet" href="/style_layout.css">
-    <link rel="stylesheet" href="/style_user.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light colorNavBar">
-      <a class="navbar-brand" href="/">Sistema De Notificaciones</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse slideButtonsNavBar" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item m-auto">
-            <a id="buttonIndexA" class="nav-link" href="/login" role="button">Iniciar Sesión</a>
-          </li>
-          <li class="nav-item m-auto">
-            <a id="buttonIndexA" class="nav-link" href="/create_user" role="button">Crear Usuario</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <% if @errormsg %>
-      <div class="alert alert-success" role="alert">
-        <%= @errormsg %>
-      </div>
-    <% end %>
-    <div class="row">
-      <% @document && @document.each do |element| %>
-        <div class="col-xl-4">
-          <div class="col-11 elementColor">
-            <a class="list-group-item list-group-item-action flex-column align-items-start  backgroundDoc">
-              <embed src="<%=element.fileDocument%>#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="75%" />
-                <div class="d-flex w-100 justify-content-between">
-                  <input type="hidden" name="pdf" value="<%=element.id%>"></input>
-                  <h4 class="mb-1"><%= element.name%></h4>
-                  <h5 class="text-muted"><%= element.date%></h5>
-                </div>
-                <h6 class="mb-1"><%= element.description%></h6>
-              </a>
-          </div>
+    <div class="navbar-fixed">
+      <nav class="teal lighten-4">
+        <div class="nav-wrapper ">
+          <button data-target="slide-out" class="sidenav-trigger teal lighten-4 btn-flat btn-large"><i class="material-icons">menu</i></button>
+          <a href="#" class="brand-logo black-text">Sistema De Notificaciones UNRC</a>
         </div>
-      <% end %>
+      </nav>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <ul id="slide-out" class="sidenav">
+      <li> <div class="col s10 m8">
+        <img class="responsive-img" src="https://grupolarabida.org/wp-content/uploads/2017/02/dise%C3%B1o-interior.jpg">
+      </div></li>
+      <li><ul class="collapsible">
+        <li class=""><div class="collapsible-header">
+          <a class="black-text"><i class="material-icons">person</i>Iniciar Sesión</a>
+        </div>
+        <div class="collapsible-body">
+          <form class="card-body" method="POST" action="/userLogin">
+            <div class="form-group">
+              <label>Email</label>
+              <input class="form-control rounded-pill" type="text" name="email" placeholder="Ingrese su Email" required>
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <input class="form-control rounded-pill" type="password"  name="password" placeholder="Ingrese su Contraseña" required>
+            </div>
+            <div class="form-group center">
+              <a type="submit" class="btn">Iniciar</a>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul></li>
+      <li><ul class="collapsible"><li>
+        <div class="collapsible-header">
+          <a class="black-text"><i class="material-icons">person_add</i>Crear Usuario</a>
+        </div>
+        <div class="collapsible-body">
+          <form class="card-body" for="validation01" method="POST" action="/newUser">
+            <div class="form-group">
+              <label class="black-text">Nombre</label>
+              <input type="text" class="form-control rounded-pill black-text" name="name" placeholder="Ingrese su Nombre">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Apellido</label>
+              <input type="text" class="form-control rounded-pill" name="surname" placeholder="Ingrese su Apellido">
+            </div>
+            <div class="form-group">
+              <label class="black-text marginLavel">DNI</label>
+              <input type="number" class="form-control rounded-pill"  name="dni"placeholder="Ingrese su DNI">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Email</label>
+              <input type="email" class="form-control rounded-pill"  name="email"placeholder="Ingrese su Email">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Contraseña</label>
+              <input type="password" class="form-control rounded-pill" name="password" placeholder="**********">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Rol</label>
+              <select class="form-control rounded-pill" name="rol" placeholder="Ingrese su Rol en la UNRC">
+                <option class="black-text" value="Estudiante">Estudiante</option>
+                <option value="Profesor">Docente</option>
+                <option value="Profesor">No Docente</option>
+                <option value="Administrativo">Administrativo</option>
+              </select>
+            </div>
+            <div class="form-group center">
+              <a type="submit" class="btn teal lighten-4 ">Crear</a>
+            </div>
+          </form>
+        </div></li>
+      </ul></li>
+      <li><div class="center">
+      <a class="black-text" href="https://www.facebook.com/DARKNetflix/?hc_ref=ARTLwXrsx--tE3UwOwh3icoTxW6DrKYVbVoxlvXeSoxdm-JsWsnADNCqJRP59mqXrhE&fref=nf&__tn__=kC-R"><i class="material-icons">facebook</i></a>
+      <a class="black-text" href="https://twitter.com/DarkNetflixES?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="material-icons">facebook</i></a>
+      <a class="black-text" href="https://www.instagram.com/darknetflix/?hl=es-la"><i class="material-icons">facebook</i></a>
+    </div></li>
+    <li><div class="section2"></div> </li>
+    </ul>
+    <div class="container">
+      <blockquote cite="http://" class="teal lighten-4">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </blockquote>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <blockquote cite="http://" class="teal lighten-4">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </blockquote>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <blockquote cite="http://" class="teal lighten-4">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </blockquote><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <footer class="page-footer teal lighten-4">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="black-text">Sistema De Notificaciones UNRC</h5>
+          <p class="grey-text text-darken-3">  UNIVERSIDAD NACIONAL DE RÍO CUARTO / RUTA NAC. 36 - KM. 601 / RÍO IV - CÓRDOBA - ARGENTINA.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="black-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-darken-3" href="https://www.unrc.edu.ar/">Universidad Nacional de Río Cuarto</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container grey-text text-darken-3">
+        © 2020 Copyright Text
+        <a class="grey-text text-darken-3 right" href="#!">Mas enlases</a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--JavaScript con SideNav y WebSocket -->
+    <script type="text/javascript" src="./scripts/myscript.js"></script>
   </body>
 </html>

@@ -1,3 +1,15 @@
+// <!-- Inicio de la -->
+document.addEventListener('DOMContentLoaded', function() {
+  M.AutoInit();
+ });
+
+// <!-- WebSocket -->
+const ws  = new WebSocket('ws://localhost:9292/miwebsoket');
+ws.onmessage = function(m) {
+  window.location.reload();
+};
+
+// <!-- Esto era lo de WebSocket anterior no se si funciona o no... hablar con nico  -->
 window.onload = function(){
   (function(){
     var show = function(el){

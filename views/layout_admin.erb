@@ -1,69 +1,163 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
-    <meta charset="utf-8">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-      <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
-      <script src="./Scripts/myscript.js" type="text/javascript" charset="utf-8"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-      <link rel="stylesheet" href="/style_forms.css">
-      <link rel="stylesheet" href="/style_layout.css">
-      <link rel="stylesheet" href="/style_user.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
   <body>
-        <nav class="navbar navbar-expand-lg navbar-light colorNavBar">
-          <div class="container">
-            <a class="navbar-brand col-xl-4" href="/profile">Sistema De Notificaciones UNRC</a>
-
-
-            <script type="text/javascript">
-            const ws  = new WebSocket('ws://localhost:9292/miwebsoket');
-            ws.onmessage = function(m) {
-            };
-            </script>
-
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Documentos sin leer
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <%@not && @not.each do |element| %>
-                  <a class="dropdown-item" href="#">Action</a>
-                <%end%>
-              </div>
-            </div>
-
-
-
-
-            <div id="msgs"></div>
-            <button class="navbar-toggler col-lg-4 col-md-2 col-sm-2 col-xs-1" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse col-xl-4" id="navbarNavDropdown">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                  <a  id="centerSlideButtonsNavBar" class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= @userName.name %>
-                  </a>
-                <div class="dropdown-menu slideButtonsNavBar " aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/edit_user">Editar Perfil</a>
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/all_document">Documentos</a>
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/notificaciones">Notificaciones</a>
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/subscriptions">Cartegorias</a>
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/category">Modificar Categorias</a>
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/create_admin">Crear Usuario</a>
-                  <a class="dropdown-item text-center slideButtonsNavBarHover" href="/logout">Cerrar sesión</a>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <div class="navbar-fixed">
+      <nav class="teal lighten-4">
+        <div class="nav-wrapper ">
+          <button data-target="slide-out" class="sidenav-trigger teal lighten-4 btn-flat btn-large"><i class="material-icons">menu</i></button>
+          <a href="#" class="brand-logo black-text">Sistema De Notificaciones UNRC</a>
         </div>
       </nav>
-    <%= yield %>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </div>
+    <ul id="slide-out" class="sidenav">
+      <li><div class="user-view">
+      <div class="background">
+        <img class="responsive-img" src="https://venngage-wordpress.s3.amazonaws.com/uploads/2018/11/15-Presentation-Background-Examples33.png">
+      </div>
+      <a href="#user"><img class="circle" src="https://w7.pngwing.com/pngs/527/663/png-transparent-logo-person-user-person-icon-rectangle-photography-computer-wallpaper.png"></a>
+      <a href="#name"><span class="white-text name"><%= @userName.name %></span></a>
+      <a href="#email"><span class="white-text email"><%= @userName.email %></span></a>
+      </div></li>
+      <li><ul class="collapsible"><li>
+        <div class="collapsible-header">
+          <a class="black-text"><i class="material-icons">person_add</i>Editar Perfil</a>
+        </div>
+        <div class="collapsible-body">
+          <form class="card-body" for="validation01" method="POST" action="/editNewUser">
+            <div class="form-group container ">
+              <label class="black-text">Nombre</label>
+              <input type="text" class="form-control rounded-pill black-text" name="name" placeholder="<%= @userName.name %>">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Apellido</label>
+              <input type="text" class="form-control rounded-pill" name="surname" placeholder="<%= @userName.surname %>">
+            </div>
+            <div class="form-group">
+              <label class="black-text marginLavel">DNI</label>
+              <input type="number" class="form-control rounded-pill"  name="dni"placeholder="<%= @userName.dni %>">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Email</label>
+              <input type="email" class="form-control rounded-pill"  name="email"placeholder="<%= @userName.email %>">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Contraseña</label>
+              <input type="password" class="form-control rounded-pill" name="password" placeholder="**********">
+            </div>
+            <div class="form-group">
+              <label class="black-text">Rol</label>
+              <select class="form-control rounded-pill" name="rol" placeholder="Ingrese su Rol en la UNRC">
+                <option class="black-text" value="Estudiante">Estudiante</option>
+                <option value="Profesor">Docente</option>
+                <option value="Profesor">No Docente</option>
+                <option value="Administrativo">Administrativo</option>
+              </select>
+            </div>
+            <div class="form-group center">
+              <a type="submit" class="btn teal lighten-4 ">Guardar</a>
+            </div>
+          </form>
+          <form class="card-body" action="/delete_user" method="post">
+            <input type="number" class="form-control rounded-pill"  name="dni"placeholder="<%= @userName.dni %>">
+            <input type="email" class="form-control rounded-pill"  name="email"placeholder="<%= @userName.email %>">
+            <div class="form-group center" >
+              <a type="submit" class="btn teal lighten-4 ">Eliminar cuenta</a>
+            </div>
+          </form>
+        </div></li>
+      </ul></li>
+      <li><a class="black-text" href="/all_document">Documentos</a></li>
+      <li><a class="black-text" href="/notificaciones">Notificaciones</a></li>
+      <li><a class="black-text" href="/subscriptions">Cartegorias</a></li>
+      <li><a class="black-text" href="/category">Modificar Categorias</a></li>
+      <li><ul class="collapsible"><li>
+          <div class="collapsible-header">
+            <a class="black-text"><i class="material-icons">person_add</i>Crear Usuario</a>
+          </div>
+          <div class="collapsible-body">
+            <form class="card-body" for="validation01" method="POST" action="/newUserAdmin">
+              <div class="form-group">
+                <label class="black-text">Nombre</label>
+                <input type="text" class="form-control rounded-pill black-text" name="name" placeholder="Ingrese su Nombre">
+              </div>
+              <div class="form-group">
+                <label class="black-text">Apellido</label>
+                <input type="text" class="form-control rounded-pill" name="surname" placeholder="Ingrese su Apellido">
+              </div>
+              <div class="form-group">
+                <label class="black-text marginLavel">DNI</label>
+                <input type="number" class="form-control rounded-pill"  name="dni"placeholder="Ingrese su DNI">
+              </div>
+              <div class="form-group">
+                <label class="black-text">Email</label>
+                <input type="email" class="form-control rounded-pill"  name="email"placeholder="Ingrese su Email">
+              </div>
+              <div class="form-group">
+                <label class="black-text">Contraseña</label>
+                <input type="password" class="form-control rounded-pill" name="password" placeholder="**********">
+              </div>
+              <div class="form-group">
+                <label class="black-text">Rol</label>
+                <select class="form-control rounded-pill" name="rol" placeholder="Ingrese su Rol en la UNRC">
+                  <option class="black-text" value="Estudiante">Estudiante</option>
+                  <option value="Profesor">Docente</option>
+                  <option value="Profesor">No Docente</option>
+                  <option value="Administrativo">Administrativo</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Permiso</label>
+                <select class="form-control" name="type" required>
+                  <option value="Usuario">Usuario</option>
+                  <option value="Administrador">Administrador</option>
+                </select>
+              </div>
+              <div class="form-group center">
+                <a type="submit" class="btn teal lighten-4">Crear</a>
+              </div>
+            </form>
+          </div></li>
+        </ul></li>
+      <li><a class="black-text" href="/logout">Cerrar Sesión</a></li>
+      <li><div class="center">
+      <a class="black-text" href="https://www.facebook.com/DARKNetflix/?hc_ref=ARTLwXrsx--tE3UwOwh3icoTxW6DrKYVbVoxlvXeSoxdm-JsWsnADNCqJRP59mqXrhE&fref=nf&__tn__=kC-R"><i class="material-icons">facebook</i></a>
+      <a class="black-text" href="https://twitter.com/DarkNetflixES?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="material-icons">facebook</i></a>
+      <a class="black-text" href="https://www.instagram.com/darknetflix/?hl=es-la"><i class="material-icons">facebook</i></a>
+    </div></li>
+  </ul>
+  <%= yield %>
+  <footer class="page-footer teal lighten-4">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="black-text">Sistema De Notificaciones UNRC</h5>
+        <p class="grey-text text-darken-3">  UNIVERSIDAD NACIONAL DE RÍO CUARTO / RUTA NAC. 36 - KM. 601 / RÍO IV - CÓRDOBA - ARGENTINA.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="black-text">Links</h5>
+        <ul>
+          <li><a class="grey-text text-darken-3" href="https://www.unrc.edu.ar/">Universidad Nacional de Río Cuarto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container grey-text text-darken-3">
+      © 2020 Copyright Text
+      <a class="grey-text text-darken-3 right" href="#!">Mas enlases</a>
+      </div>
+    </div>
+  </footer>
+  <!-- <div>Iconos diseñados por <a href="https://www.flaticon.es/autores/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!--JavaScript con SideNav y WebSocket -->
+  <script type="text/javascript" src="./scripts/myscript.js"></script>
   </body>
 </html>
