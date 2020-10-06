@@ -1,0 +1,28 @@
+<div class="alert alert-success" role="alert">
+  Documentos en los que estoy etiquetado:
+</div>
+
+<% if @errormsg %>
+  <div class="alert alert-success" role="alert">
+    <%= @errormsg %>
+  </div>
+<% end %>
+
+  <div class="row">
+      <% @document && @document.each do |element| %>
+      <div class="container card small col l3 s6 ">
+             <div class="card-image waves-effect waves-block waves-light">
+               <embed  src="<%=element.fileDocument%>" type="application/pdf" width="100%" height="200%" />
+             </div>
+             <div class="card-content">
+               <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
+               <p><a href="<%=element.fileDocument%>" download="<%= element.name%>">Descargar</a></p>
+             </div>
+             <div class="card-reveal">
+               <span class="card-title grey-text text-darken-4"><%= element.name%><i class="material-icons right">close</i></span>
+               <h6 class="blue-text text-darken-1">Fecha: <%= element.date%></h6>
+               <h6 class="blue-text text-darken-1">Descripción: <%= element.description%></h6>
+             </div>
+           </div>
+        <% end %>
+  </div>

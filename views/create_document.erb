@@ -1,0 +1,59 @@
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+</head>
+<% if  @errormsg  %>
+    <div class="alert alert-success" role="alert">
+      <%= @errormsg %>
+    </div>
+<% end %>
+
+<div class="row container">
+  <div class="col s8  offset-s2">
+    <div class="card medium">
+      <div class="card-content black-text">
+        <span class="center-align card-title">Subir Un Documento</span>
+      </div>
+      <div class="card-action">
+        <form id="form" method="post" action="create_document" enctype="multipart/form-data">
+            <div class="black-text">
+              <label class="black-text" >Nombre del documento:</label>
+              <input id="input" type="text" name="name" required>
+            </div>
+            <div class="blue-text text-darken-2">
+              <label class="black-text">Descripcion del documento:</label>
+              <input type="text" name="description" required>
+            </div>
+            <div class="input-field col s12 m6">
+              <select  class="form-control mi-selector" name='cat'>
+                <option value="" disabled selected>Elija la categoria</option>
+                <%@categories && @categories.each do |element| %>
+                <option value='<%= element.id%>'><%= element.name%></option>
+                <% end %>
+              </select>
+              <select name='mult[]' multiple>
+                <option value="" disabled selected>Etiquetar Personas</option>
+                <%@userCreate && @userCreate.each do |element| %>
+                <option value= "<%= element.id%>" > <%= element.name%> </option>
+                <% end %>
+              </select>
+            </div>
+            <div class="row">
+              <input type="button" value="Seleccione un archivo" class="teal lighten-4 btn waves-effect waves-light" onclick="document.getElementById('file').click();"  required/>
+              <input type="file" style="display:none;" id="file" name="PDF" accept=".pdf" required />
+              <button class="teal lighten-4 btn black-text waves-effect waves-light" type="submit">Subir</button>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+  $(document).ready(function() {
+      $('.mi-selector').select2();
+  });
+});
+</script>

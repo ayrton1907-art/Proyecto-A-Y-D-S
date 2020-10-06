@@ -1,13 +1,21 @@
 <head>
   <meta charset="utf-8">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
 </head>
 <% if @errormsg %>
   <div class="alert alert-success" role="alert">
     <%= @errormsg %>
   </div>
 <% end %>
+
+
 <form  class="row backgroundHs" action="/all_document" method="get">
   <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
     <a id="buttonIndexDocA" class="buttonForm nav-link" href="/create_document" role="button">Nuevo</a>
@@ -65,7 +73,19 @@
       </div>
     <% end %>
   </div>
-  
+  <div class="footer-copyright">
+    <div class="container grey-text text-darken-3">
+    © 2020 Copyright Text
+    <a class="grey-text text-darken-3 right" href="#!">Mas enlaces</a>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!--JavaScript con SideNav y WebSocket -->
+<script type="text/javascript" src="./scripts/myscript.js"></script>
+</body>
+</html>
+
   <script type="text/javascript">
   jQuery(document).ready(function($){
     $(document).ready(function() {
