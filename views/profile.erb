@@ -8,21 +8,119 @@
   </div>
 <% end %>
 
-  <div class="row">
-      <% @document && @document.each do |element| %>
-      <div class="container card small col l3 s6 ">
-             <div class="card-image waves-effect waves-block waves-light">
-               <embed  src="<%=element.fileDocument%>" type="application/pdf" width="100%" height="200%" />
-             </div>
-             <div class="card-content">
-               <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
-               <p><a href="<%=element.fileDocument%>" download="<%= element.name%>">Descargar</a></p>
-             </div>
-             <div class="card-reveal">
-               <span class="card-title grey-text text-darken-4"><%= element.name%><i class="material-icons right">close</i></span>
-               <h6 class="blue-text text-darken-1">Fecha: <%= element.date%></h6>
-               <h6 class="blue-text text-darken-1">Descripción: <%= element.description%></h6>
-             </div>
-           </div>
-        <% end %>
+<div class="row">
+  <% @document && @document.each do |element| %>
+    <div class="container card small col l3 s6" style="width: 23%; margin: 1%;">
+      <div class="card-image waves-effect waves-block waves-light">
+        <embed  src="<%=element.fileDocument%>" type="application/pdf" width="100%" height="200%" />
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
+          <div class="col l6">
+            <p>
+              <a class="btn waves-effect waves-light" href="<%=element.fileDocument%>" download="<%= element.name%>">Submit
+               <i class="material-icons right">file_download</i>
+             </a>
+            </p>
+          </div>
+          <div class="col l6 right-align">
+            <form method="post" action="delete_document">
+              <input type="hidden" name="theId" value="<%=element.id%>"></input>
+              <button type="submit" class="btn-floating btn waves-effect waves-light red">
+                <i class="material-icons">delete</i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4"><%= element.name%><i class="material-icons right">close</i></span>
+        <h6 class="blue-text text-darken-1">Fecha: <%= element.date%></h6>
+        <h6 class="blue-text text-darken-1">Descripción: <%= element.description%></h6>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons">mode_edit</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating yellow darken-1 modal-trigger" href="#modalDoc" title="Crear Documento"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating green modal-trigger" href="#modalCat" title="Crear Categoria"><i class="material-icons" >border_color</i></a></li>
+  </ul>
+</div>
+
+<div id="modalDoc" class="modal">
+  <div class="col s8  offset-s2">
+    <div class="card medium">
+      <div class="card-content black-text">
+        <span class="center-align card-title">Subir Un Documento</span>
+      </div>
+      <div class="card-action">
+        <form id="form" method="post" action="create_document" enctype="multipart/form-data">
+            <div class="black-text">
+              <label class="black-text" >Nombre del documento:</label>
+              <input id="input" type="text" name="name" required>
+            </div>
+            <div class="blue-text text-darken-2">
+              <label class="black-text">Descripcion del documento:</label>
+              <input type="text" name="description" required>
+            </div>
+            <div class="input-field col s12 m6">
+              <select  class="form-control mi-selector" name='cat'>
+                <option value="" disabled selected>Elija la categoria</option>
+                <%@categories && @categories.each do |element| %>
+                <option value='<%= element.id%>'><%= element.name%></option>
+                <% end %>
+              </select>
+              <select name='mult[]' multiple>
+                <option value="" disabled selected>Etiquetar Personas</option>
+                <%@userCreate && @userCreate.each do |element| %>
+                <option value= "<%= element.id%>" > <%= element.name%> </option>
+                <% end %>
+              </select>
+            </div>
+            <div class="row">
+              <input type="button" value="Seleccione un archivo" class="teal lighten-4 btn waves-effect waves-light" onclick="document.getElementById('file').click();"  required/>
+              <input type="file" style="display:none;" id="file" name="PDF" accept=".pdf" required />
+              <button class="teal lighten-4 btn black-text waves-effect waves-light" type="submit">Subir</button>
+            </div>
+        </div>
+      </form>
+    </div>
   </div>
+</div>
+
+<div id="modalCat" class="modal">
+    <div class="card low">
+      <div class="container col-xl-4">
+        <form class="col-xl-10 backgroundFroms" action="/create_category" method="Post">
+          <div class="form-group">
+            <input type="text" class="form-control backgroundImput" name="name"placeholder="Ingresa el Nombre" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control backgroundImput" name="description"placeholder="Ingresa la Descripción" required>
+          </div>
+          <div class="form-group text-center">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<script>
+  function myFunction() {
+    var option_value = document.getElementById("numbers").value;
+    if (option_value == "3") {
+      //  alert("Hai !");
+       $("#myModal").modal();
+     }
+  }
+</script>

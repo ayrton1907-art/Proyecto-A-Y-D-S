@@ -40,7 +40,7 @@ class App < Sinatra::Base
         @layoutEnUso = :layout_users
       end
     end
-    @urlAdmin = ["/category","/create_admin","/all_document" ,"/selected_document","/create_document","/migrate_documents"]
+    @urlAdmin = ["/category","/create_admin","/all_document", "/migrate_documents"]
     if !session[:type] &&  @urlAdmin.include?(request.path_info)
       redirect "/profile"
     end
@@ -137,6 +137,8 @@ class App < Sinatra::Base
   get "/profile" do #Funciona
     @User = User.find(id: session[:user_id])
     @document = Document.where(users: @User)
+    @userCreate = User.all
+    @categories = Category.all
     erb :profile, :layout =>@layoutEnUso
   end
 
@@ -202,13 +204,6 @@ class App < Sinatra::Base
     redirect "/notificaciones"
   end
 
-
-  get "/create_document" do #Funciona
-    @userCreate = User.all
-    @categories = Category.all
-    erb:create_document, :layout =>@layoutEnUso
-  end
-
   get "/tag_document" do #Que es esto??
     if session[:type]==true
       @document[] = documents_users
@@ -267,13 +262,12 @@ class App < Sinatra::Base
       @allCat = Category.all
       @userName = User.find(id: session[:user_id])
       filter()
-      erb :all_document, :layout =>@layoutEnUso
     else
       @userCreate = User.all
       @categories = Category.all
       @errormsg = "El Documento/descripción ya existen"
-      erb :create_document, :layout =>@layoutEnUso
     end
+    redirect "/profile"
   end
 
   post "/delete_document" do #Funciona
@@ -285,13 +279,7 @@ class App < Sinatra::Base
       element.delete
     end
     @pdfDelete.delete
-    redirect "/all_document"
-  end
-
-  post "/selected_document" do #Funciona
-    @allCat = Category.all
-    @userCreate = User.all
-    erb :selected_document, :layout =>@layoutEnUso
+    redirect "/profile"
   end
 
   post "/modify_document" do #Funciona
@@ -332,11 +320,11 @@ class App < Sinatra::Base
   post "/create_category" do #Funciona
     if cat = Category.find(name: params[:name])
       [500, {}, "ya existe la categoria"]
-      redirect "/category"
+      redirect "/rofile"
     else
       cat = Category.new(name: params[:name],description: params[:description] )
       if cat.save
-        redirect "/category"
+        redirect "/profile"
       else
         [500, {}, "Internal Server Error"]
         redirect "/home"
