@@ -1,0 +1,97 @@
+<div class="row nav-wrapper">
+  <div class="col m3 l3">
+    <div class="row blue-grey lighten-5">
+      <div class="input-field col m8 l8">
+        <input type="text" id="searchDocuments" class="autocomplete" name="document">
+        <label for="searchDocuments">Buscar Documento</label>
+      </div>
+      <div class="input-field col m4 l4">
+        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
+          <i class="material-icons">search</i>
+        </button>
+      </div>
+      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
+    </div>
+  </div>
+  <div class="col m3 l3">
+    <div class="row blue-grey lighten-5">
+      <div class="input-field col m8 l8">
+        <input type="text" id="fecha" class="datepicker">
+        <label for="fecha">Filtrar por Fecha</label>
+      </div>
+      <div class="input-field col m4 l4">
+        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
+          <i class="material-icons">calendar</i>
+        </button>
+      </div>
+      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
+    </div>
+  </div>
+  <div class="col m3 l3">
+    <div class="row blue-grey lighten-5">
+      <div class="input-field col m8 l8">
+        <input type="text" id="categories" class="autocomplete">
+        <label for="categories">Filtrar por Categoria</label>
+      </div>
+      <div class="input-field col m4 l4">
+        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
+          <i class="material-icons">search</i>
+        </button>
+      </div>
+      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
+    </div>
+  </div>
+  <div class="col m3 l3">
+    <div class="row blue-grey lighten-5">
+      <div class="input-field col m8 l8">
+        <input type="text" id="" class="autocomplete">
+        <label for="">            </label>
+      </div>
+      <div class="input-field col m4 l4">
+        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
+          <i class="material-icons">        </i>
+        </button>
+      </div>
+      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <% @document && @document.each do |element| %>
+    <div class="container col m6 l3">
+      <div class="card small">
+        <div class="card-image waves-effect waves-block waves-light">
+          <embed  src="<%=element.fileDocument%>" type="application/pdf" width="100%" height="200%" />
+        </div>
+        <div class="card-content">
+          <div class="row">
+            <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
+            <div class="row">
+              <div class="col m3 l3">
+                <p>
+                  <a class="btn-floating btn waves-effect waves-light z-depth-3 blue lighten-3" href="<%=element.fileDocument%>" download="<%= element.name%>"><i class="material-icons">file_download</i>
+                  </a>
+                </p>
+                </div>
+                <div class="col m3 l3">
+                  <form  method="POST" action="/see_document">
+                    <input type="hidden" name="nombre" value="Documentos"></input>
+                    <input type="hidden" name="camino" value="/documents"></input>
+                    <input type="hidden" name="theId" value="<%= element.id %>"></input>
+                    <button class="btn btn-floating waves-effect waves-light blue lighten-3 z-depth-3" type="submit"><i class="material-icons">local_library</i></button>
+                  </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4"><%= element.name%><i class="material-icons right">close</i></span>
+          <h6 class="black-text text-darken-1">Fecha: <%= element.date%></h6>
+          <h6 class="black-text text-darken-1">Descripción: <%= element.description%></h6>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

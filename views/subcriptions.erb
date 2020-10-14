@@ -1,0 +1,47 @@
+<div class="row">
+  <% @subcriptions && @subcriptions.each do |element| %>
+  <div class="col m6 l3">
+    <div class="card  z-depth-3 blue lighten-3">
+      <form class="" method="POST" action="/delete_subcriptions">
+        <input type="hidden" name="idSubcriptions" value="<%=element.id%>"></input>
+        <div class="card-content blue lighten-3">
+            <span class="card-title">
+                  <%=element.name%>
+                  <button class="btn-small btn-floating  waves-effect waves-light white whz-depth-3 right" type="submit"><i class="material-icons black-text right">highlight_off</i></button>
+              </span>
+            <p><%=element.description%></p>
+        </div>
+      </form>
+    </div>
+  </div>
+<% end %>
+</div>
+<!-- Modal Trigger -->
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large waves-effect waves-light modal-trigger  red z-depth-3" href="#modal1"><i class="material-icons">add</i></a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <form id="form" method="POST" action="new_suscription" enctype="multipart/form-data">
+    <div class="modal-title center light-blue-text">
+         <h4 class="section">Nueva Suscripcion</h4>
+    </div>
+    <div class="divider light-blue lighten-2"></div>
+   <div class="modal-content">
+     <div class="form-group">
+       <select  class="form-control mi-selector" name='id_cat'>
+         <option value="" disabled selected>Elija la categoria</option>
+         <%@allCategory && @allCategory.each do |element| %>
+         <option value='<%= element.id%>'><%= element.name%></option>
+         <% end %>
+       </select>
+     </div>
+   </div>
+   <div class="modal-footer">
+     <div class="center container">
+       <button class="btn blue lighten-3 waves-effect waves-light black-text z-depth-3" type="submit">Sucribirme</button>
+     </div>
+   </div>
+  </form>
+</div>

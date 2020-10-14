@@ -1,0 +1,106 @@
+<div class="row">
+  <% @allDocument && @allDocument.each do |element| %>
+    <div class="container col m6 l3">
+      <div class="card small"">
+        <div class="card-image">
+          <embed  src="<%=element.fileDocument%>" type="application/pdf" width="100%" height="100%" />
+        </div>
+        <div class="card-content white">
+          <div class="row">
+            <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
+            <div class="col m3 l3">
+              <p>
+                <a class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3" href="<%=element.fileDocument%>" download="<%= element.name%>"><i class="material-icons">file_download</i>
+                </a>
+              </p>
+            </div>
+            <div class="col m3 l3">
+              <form method="post" action="/delete_document">
+                <input type="hidden" name="theId" value="<%=element.id%>"></input>
+                <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
+                  <i class="material-icons">delete</i>
+                </button>
+              </form>
+            </div>
+            <div class="col m3 l3">
+              <form action="/select_document" method="post">
+                <input type="hidden" name="theId" value="<%=element.id%>"></input>
+                <button class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3" type="submit">
+                  <i class="material-icons">edit</i>
+                </button>
+              </form>
+            </div>
+            <div class="col m3 l3 ">
+              <form  method="POST" action="/see_document">
+                <input type="hidden" name="camino" value="/all_document"></input>
+                <input type="hidden" name="nombre" value="Documentos"></input>
+                <input type="hidden" name="theId" value="<%= element.id %>"></input>
+                <button class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3" type="submit">
+                  <i class="material-icons">local_library</i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4"><%= element.name%><i class="material-icons right">close</i></span>
+          <h6 class="black-text text-darken-1">Fecha: <%= element.date%></h6>
+          <h6 class="black-text text-darken-1">Descripción: <%= element.description%></h6>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Modal Trigger -->
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large waves-effect waves-light modal-trigger  red z-depth-3" href="#modal1"><i class="material-icons">add</i></a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <form id="form" method="post" action="create_document" enctype="multipart/form-data">
+    <div class="modal-title center light-blue-text">
+         <h4 class="section">Crear Documento</h4>
+    </div>
+    <div class="divider light-blue lighten-2"></div>
+   <div class="modal-content">
+     <div class="form-group">
+       <label class="black-text" >Nombre del documento:</label>
+       <input id="input" type="text" name="name" required>
+     </div>
+     <div class="form-group">
+       <label class="black-text">Descripcion del documento:</label>
+       <input type="text" name="description" required>
+     </div>
+     <div class="form-group">
+       <select  class="form-control mi-selector" name='cat'>
+         <option value="" disabled selected>Elija la categoria</option>
+         <%@allCategory && @allCategory.each do |element| %>
+         <option value='<%= element.id%>'><%= element.name%></option>
+         <% end %>
+       </select>
+       <select name='mult[]' multiple>
+         <option value="" disabled selected>Etiquetar Personas</option>
+         <%@usersName && @usersName.each do |element| %>
+         <option value= "<%= element.id%>" > <%= element.name%> </option>
+         <% end %>
+       </select>
+     </div>
+   </div>
+   <div class="modal-footer">
+     <div class="center container">
+       <div class="file-field input-field">
+         <div class="btn blue lighten-3 waves-effect waves-light black-text z-depth-3">
+            <span>Seleccione un archivo</span>
+            <input type="file" id="file" name="PDF" accept=".pdf"required>
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+       <button class="btn blue lighten-3  waves-effect waves-light black-text z-depth-3" type="submit">Subir</button>
+     </div>
+   </div>
+  </form>
+</div>

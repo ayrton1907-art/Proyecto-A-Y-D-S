@@ -13,107 +13,173 @@
   <body>
     <header>
       <div class="navbar-fixed">
-        <nav class="teal lighten-4">
-          <div class="nav-wrapper ">
-            <button data-target="slide-out" class="sidenav-trigger teal lighten-4 btn-flat btn-large"><i class="material-icons">menu</i></button>
-            <a href="#" class="brand-logo black-text">Sistema De Notificaciones UNRC</a>
+        <nav class="row black-text  blue lighten-2">
+          <div class="nav-wrapper">
+            <div class="col m8">
+              <button data-target="slide-out" class="blue lighten-2 sidenav-trigger btn-flat btn-large"><i class="material-icons">menu</i></button>
+                <a class="truncate brand-logo black-text">Sistema De Notificaciones UNRC</a>
+            </div>
+            <div class="col m4 hide-on-med-and-down">
+                  <%if @page != "/profile" %>
+                    <a href="/profile" class="breadcrumb">Inicio</a>
+                  <% end %>
+                  <%if !@page_name.nil? %>
+                    <a href="<%= @page %> " class="breadcrumb"> <%= @page_name %> </a>
+                  <% end %>
+                  <%if !@page_interna.nil? %>
+                    <a href="<%= @page_before %>" class="breadcrumb"><%= @page_before_name %></a>
+                    <a href="<%= @page %>" class="breadcrumb"><%= @page_interna %></a>
+                  <% end %>
+            </div>
           </div>
         </nav>
       </div>
     </header>
     <ul id="slide-out" class="sidenav">
-      <li><div class="user-view">
-      <div class="background">
-        <img class="responsive-img" src="https://venngage-wordpress.s3.amazonaws.com/uploads/2018/11/15-Presentation-Background-Examples33.png">
-      </div>
-      <a href="#user"><img class="circle" src="https://w7.pngwing.com/pngs/527/663/png-transparent-logo-person-user-person-icon-rectangle-photography-computer-wallpaper.png"></a>
-      <a href="#name"><span class="white-text name"><%= @userName.name %></span></a>
-      <a href="#email"><span class="white-text email"><%= @userName.email %></span></a>
-      </div></li>
-      <li><ul class="collapsible"><li>
-        <div class="collapsible-header">
-          <a class="black-text"><i class="material-icons">person_add</i>Editar Perfil</a>
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img class="responsive-img" src="https://venngage-wordpress.s3.amazonaws.com/uploads/2018/11/15-Presentation-Background-Examples33.png">
+          </div>
+          <a href="#user"><img class="circle" src="https://w7.pngwing.com/pngs/527/663/png-transparent-logo-person-user-person-icon-rectangle-photography-computer-wallpaper.png"></a>
+          <a href="#name"><span class="white-text name"><%= @userName.name %></span></a>
+          <a href="#email"><span class="white-text email"><%= @userName.email %></span></a>
         </div>
-        <div class="collapsible-body">
-          <form class="card-body" for="validation01" method="POST" action="/editNewUser">
-            <div class="form-group">
-              <label class="black-text">Nombre</label>
-              <input type="text" class="form-control rounded-pill black-text" name="name" placeholder="<%= @userName.name %>">
-            </div>
-            <div class="form-group">
-              <label class="black-text">Apellido</label>
-              <input type="text" class="form-control rounded-pill" name="surname" placeholder="<%= @userName.surname %>">
-            </div>
-            <div class="form-group">
-              <label class="black-text marginLavel">DNI</label>
-              <input type="number" class="form-control rounded-pill"  name="dni"placeholder="<%= @userName.dni %>">
-            </div>
-            <div class="form-group">
-              <label class="black-text">Email</label>
-              <input type="email" class="form-control rounded-pill"  name="email"placeholder="<%= @userName.email %>">
-            </div>
-            <div class="form-group">
-              <label class="black-text">Contraseña</label>
-              <input type="password" class="form-control rounded-pill" name="password" placeholder="**********">
-            </div>
-            <div class="form-group">
-              <label class="black-text">Rol</label>
-              <select class="form-control rounded-pill" name="rol" placeholder="Ingrese su Rol en la UNRC">
-                <option class="black-text" value="Estudiante">Estudiante</option>
-                <option value="Profesor">Docente</option>
-                <option value="Profesor">No Docente</option>
-                <option value="Administrativo">Administrativo</option>
-              </select>
-            </div>
-            <div class="form-group center">
-              <a type="submit" class="btn teal lighten-4">Guardar</a>
-            </div>
-          </form>
-          <form class="card-body" action="/delete_user" method="post">
-            <input type="number" class="form-control rounded-pill"  name="dni"placeholder="<%= @userName.dni %>">
-            <div class="form-group center" >
-              <a type="submit" class="btn teal lighten-4 ">Eliminar cuenta</a>
-            </div>
-          </form>
-        </div></li>
-      </ul></li>
-      <li><a class="black-text" href="/notificaciones">Notificaciones</a></li>
-      <li><a class="black-text" href="/all_documentUser">Documentos</a></li>
-      <li><a class="black-text" href="/subscriptions">Categorias</a></li>
-      <li><a class="black-text" href="/logout">Cerrar Sesión</a></li>
-      <li><div class="center">
-      <a class="black-text" href="https://www.facebook.com/DARKNetflix/?hc_ref=ARTLwXrsx--tE3UwOwh3icoTxW6DrKYVbVoxlvXeSoxdm-JsWsnADNCqJRP59mqXrhE&fref=nf&__tn__=kC-R"><i class="material-icons">facebook</i></a>
-      <a class="black-text" href="https://twitter.com/DarkNetflixES?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="material-icons">facebook</i></a>
-      <a class="black-text" href="https://www.instagram.com/darknetflix/?hl=es-la"><i class="material-icons">facebook</i></a>
-    </div></li>
-  </ul>
-  <main>
+      </li>
+      <li>
+        <a class="collapsible-header black-text" href="/profile">
+          <i class="material-icons">home</i>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a class="collapsible-header black-text" href="/notification">
+          <i class="material-icons">notifications_none</i>
+          Notificaciones
+          <span class="new badge">4</span>
+        </a>
+      </li>
+      <li>
+        <a class="collapsible-header black-text" href="/documents">
+          <i class="material-icons">content_copy</i>
+          Documentos
+        </a>
+      </li>
+      <li>
+        <a class="collapsible-header black-text" href="/subcriptions">
+          <i class="material-icons black-text">label</i>
+          Suscripciones
+        </a>
+      </li>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header">
+            <a class="black-text"><i class="material-icons">edit</i>Editar Perfil</a>
+          </div>
+          <div class="collapsible-body">
+            <form id="form" method="POST" action="/edit_user">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="name" type="text" class="validate" name="name" placeholder="<%= @userName.name %>">
+                  <label for="name">Nombre</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="surname" type="text" class="validate" name="surname" placeholder="<%= @userName.surname %>">
+                  <label for="surname">Apellido</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="dni" type="number" class="validate" name="dni" placeholder="<%= @userName.dni %>">
+                  <label for="dni">DNI</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="email" type="email" class="validate" name="email" placeholder="<%= @userName.email %>">
+                  <label for="email">Email</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="password" type="password" class="validate" name="password">
+                  <label for="password">Contraseña</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <select id="rol" class="validate" name="rol">
+                    <option class="black-text" value="Estudiante">Estudiante</option>
+                    <option value="Profesor">Docente</option>
+                    <option value="Profesor">No Docente</option>
+                    <option value="Administrativo">Administrativo</option>
+                  </select>
+                  <label for="rol">Rol</label>
+                </div>
+              </div>
+              <div class="form-group center">
+                <button type="submit" class="btn blue lighten-3  waves-effect waves-light black-text z-depth-3"> Guardar</button>
+              </div>
+            </form>
+            <form class="card-body" action="/delete_user" method="post">
+              <input type="hidden" class="form-control rounded-pill"  name="dni" placeholder="<%= @userName.dni %>">
+              <input type="hidden" class="form-control rounded-pill"  name="email" placeholder="<%= @userName.email %>">
+              <div class="form-group center" >
+                <button type="submit" class="btn blue lighten-3  waves-effect waves-light black-text z-depth-3">Eliminar cuenta</button>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+      <li>
+        <div class="collapsible-header">
+          <a class="black-text" href="/logout">
+            <i class="material-icons">input</i>
+            Cerrar Sesión
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="divider light-blue lighten-2"></div>
+        <div class="section"></div>
+        <div class="center">
+          <a class="black-text" href="https://www.facebook.com/DARKNetflix/?hc_ref=ARTLwXrsx--tE3UwOwh3icoTxW6DrKYVbVoxlvXeSoxdm-JsWsnADNCqJRP59mqXrhE&fref=nf&__tn__=kC-R"><i class="material-icons">facebook</i></a>
+          <a class="black-text" href="https://twitter.com/DarkNetflixES?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="material-icons">facebook</i></a>
+          <a class="black-text" href="https://www.instagram.com/darknetflix/?hl=es-la"><i class="material-icons">facebook</i></a>
+        </div>
+      </li>
+    </ul>
+    <main class=" white">
       <%= yield %>
-  </main>
-  <footer class="page-footer teal lighten-4">
-    <div class="row">
-      <div class="col l6 s12">
-        <h5 class="black-text">Sistema De Notificaciones UNRC</h5>
-        <p class="grey-text text-darken-3">  UNIVERSIDAD NACIONAL DE RÍO CUARTO / RUTA NAC. 36 - KM. 601 / RÍO IV - CÓRDOBA - ARGENTINA.</p>
+    </main>
+    <footer class=" main body page-footer black-text blue lighten-2">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="black-text">Sistema De Notificaciones UNRC</h5>
+          <p class="grey-text text-darken-3">  UNIVERSIDAD NACIONAL DE RÍO CUARTO / RUTA NAC. 36 - KM. 601 / RÍO IV - CÓRDOBA - ARGENTINA.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="black-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-darken-3" href="https://www.unrc.edu.ar/">Universidad Nacional de Río Cuarto</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="col l4 offset-l2 s12">
-        <h5 class="black-text">Links</h5>
-        <ul>
-          <li><a class="grey-text text-darken-3" href="https://www.unrc.edu.ar/">Universidad Nacional de Río Cuarto</a></li>
-        </ul>
+      <div class="footer-copyright blue lighten-1">
+        <div class="container white-text ">
+          © 2020 Copyright Text
+          <a class="white-text  right" href="#!">Mas enlaces</a>
+        </div>
       </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container grey-text text-darken-3">
-      © 2020 Copyright Text
-      <a class="grey-text text-darken-3 right" href="#!">Mas enlaces</a>
-      </div>
-    </div>
-  </footer>
-  <!-- <div>Iconos diseñados por <a href="https://www.flaticon.es/autores/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
+    </footer>
+
   <!-- Compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!--JavaScript con SideNav y WebSocket -->
-  <script type="text/javascript" src="./scripts/myscript.js"></script>
+
+  <script type="text/javascript" src="./js/myscript.js"></script>
   </body>
 </html>

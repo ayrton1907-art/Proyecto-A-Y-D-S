@@ -16,7 +16,7 @@ DB = Sequel.connect(
   host: settings.db_host,
   user: settings.db_username,
   password: settings.db_password)
-
+Sequel::Model.plugin:json_serializer
 # Require and run the main app
 require "./app.rb"
 run App

@@ -10,10 +10,12 @@
   </head>
   <body>
     <div class="navbar-fixed">
-      <nav class="teal lighten-4">
-        <div class="nav-wrapper ">
-          <button data-target="slide-out" class="sidenav-trigger teal lighten-4 btn-flat btn-large"><i class="material-icons">menu</i></button>
-          <a href="#" class="brand-logo black-text">Sistema De Notificaciones UNRC</a>
+      <nav class="row black-text  blue lighten-2">
+        <div class="nav-wrapper">
+          <div class="col m8">
+            <button data-target="slide-out" class="blue lighten-2 sidenav-trigger btn-flat btn-large"><i class="material-icons">menu</i></button>
+              <a class="truncate brand-logo black-text">Sistema De Notificaciones UNRC</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -21,64 +23,85 @@
       <li> <div class="col s10 m8">
         <img class="responsive-img" src="https://grupolarabida.org/wp-content/uploads/2017/02/dise%C3%B1o-interior.jpg">
       </div></li>
-      <li><ul class="collapsible">
-        <li class=""><div class="collapsible-header">
-          <a class="black-text"><i class="material-icons">person</i>Iniciar Sesión</a>
-        </div>
-        <div class="collapsible-body">
-          <form class="card-body" method="POST" action="/userLogin">
-            <div class="form-group">
-              <label>Email</label>
-              <input class="form-control rounded-pill" type="text" name="email" placeholder="Ingrese su Email" required>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header">
+            <a class="black-text"><i class="material-icons">person</i>Iniciar Sesión</a>
+          </div>
+          <div class="collapsible-body">
+          <form class="card-body" method="POST" action="/user_login">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="email" type="email" class="validate" name="email" required>
+                <label for="email">Email</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Contraseña</label>
-              <input class="form-control rounded-pill" type="password"  name="password" placeholder="Ingrese su Contraseña" required>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="password" type="password" class="validate" name="password" required>
+                <label for="password">Contraseña</label>
+              </div>
             </div>
-            <div class="form-group center">
-              <button type="submit" class="btn">Iniciar</button>
+            <div class="row">
+              <div class="input-field center col s12">
+                <button type="submit" class="btn">Iniciar</button>
+              </div>
             </div>
           </form>
-        </div>
-      </li>
-    </ul></li>
+          </div>
+        </li>
+      </ul>
       <li><ul class="collapsible"><li>
         <div class="collapsible-header">
           <a class="black-text"><i class="material-icons">person_add</i>Crear Usuario</a>
         </div>
         <div class="collapsible-body">
-          <form class="card-body" for="validation01" method="POST" action="/newUser">
-            <div class="form-group">
-              <label class="black-text">Nombre</label>
-              <input type="text" class="form-control rounded-pill black-text" name="name" placeholder="Ingrese su Nombre">
+          <form class="card-body" for="validation01" method="POST" action="/new_user">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="name" type="text" class="validate" name="name" required>
+                <label for="name">Nombre</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="black-text">Apellido</label>
-              <input type="text" class="form-control rounded-pill" name="surname" placeholder="Ingrese su Apellido">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="surname" type="text" class="validate" name="surname" required>
+                <label for="surname">Apellido</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="black-text marginLavel">DNI</label>
-              <input type="number" class="form-control rounded-pill"  name="dni"placeholder="Ingrese su DNI">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="dni" type="number" class="validate" name="dni" required>
+                <label for="dni">DNI</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="black-text">Email</label>
-              <input type="email" class="form-control rounded-pill"  name="email"placeholder="Ingrese su Email">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="newEmail" type="email" class="validate" name="email" required>
+                <label for="newEmail">Email</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="black-text">Contraseña</label>
-              <input type="password" class="form-control rounded-pill" name="password" placeholder="**********">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="newPassword" type="password" class="validate" name="password" required>
+                <label for="newPassword">Contraseña</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="black-text">Rol</label>
-              <select class="form-control rounded-pill" name="rol" placeholder="Ingrese su Rol en la UNRC">
-                <option class="black-text" value="Estudiante">Estudiante</option>
-                <option value="Profesor">Docente</option>
-                <option value="Profesor">No Docente</option>
-                <option value="Administrativo">Administrativo</option>
-              </select>
+            <div class="row">
+              <div class="input-field col s12">
+                <select id="rol" type="passworolrd" class="validate" name="rol" required>
+                  <option class="black-text" value="Estudiante">Estudiante</option>
+                  <option value="Profesor">Docente</option>
+                  <option value="Profesor">No Docente</option>
+                  <option value="Administrativo">Administrativo</option>
+                </select>
+                <label for="rol">Rol</label>
+              </div>
             </div>
-            <div class="form-group center">
-              <button type="submit" class="btn teal lighten-4 ">Crear</button>
+            <div class="row">
+              <div class="input-field center col s12">
+                <button type="submit" class="btn teal lighten-4 ">Crear</button>
+              </div>
             </div>
           </form>
         </div></li>
@@ -90,20 +113,36 @@
     </div></li>
     <li><div class="section2"></div> </li>
     </ul>
-    <div class="container">
-      <blockquote cite="http://" class="teal lighten-4">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </blockquote>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <blockquote cite="http://" class="teal lighten-4">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </blockquote>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <blockquote cite="http://" class="teal lighten-4">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </blockquote><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    <div class="row">
+      <% @document && @document.each do |element| %>
+        <div class="container col m6 l3">
+          <div class="card small">
+            <div class="card-image waves-effect waves-block waves-light">
+              <embed  src="<%=element.fileDocument%>" type="application/pdf" width="100%" height="200%" />
+            </div>
+            <div class="card-content">
+              <div class="row">
+                <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
+                <div class="col l6">
+                  <p>
+                      <a class="btn-floating btn waves-effect waves-light blue lighten-3" href="<%=element.fileDocument%>" download="<%= element.name%>"><i class="material-icons">file_download</i>
+                      </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4"><%= element.name%><i class="material-icons right">close</i></span>
+              <h6 class="blue-text text-darken-1">Fecha: <%= element.date%></h6>
+              <h6 class="blue-text text-darken-1">Descripción: <%= element.description%></h6>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-    <footer class="page-footer teal lighten-4">
+
+    <footer class=" main body page-footer black-text blue lighten-2">
       <div class="row">
         <div class="col l6 s12">
           <h5 class="black-text">Sistema De Notificaciones UNRC</h5>
@@ -116,15 +155,15 @@
           </ul>
         </div>
       </div>
-      <div class="footer-copyright">
-        <div class="container grey-text text-darken-3">
-        © 2020 Copyright Text
-        <a class="grey-text text-darken-3 right" href="#!">Mas enlaces</a>
+      <div class="footer-copyright blue lighten-1">
+        <div class="container white-text ">
+          © 2020 Copyright Text
+          <a class="white-text  right" href="#!">Mas enlaces</a>
         </div>
       </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!--JavaScript con SideNav y WebSocket -->
-    <script type="text/javascript" src="./scripts/myscript.js"></script>
+    <script type="text/javascript" src="./js/myscript.js"></script>
   </body>
 </html>

@@ -1,0 +1,112 @@
+<div class="row">
+  <%@documentNotificationEtq && @documentNotificationEtq.each do |element| %>
+  <%if !element.info.seen %>
+  <div class="section container col m6 l3">
+    <div class="card z-depth-3 white">
+      <div class="row col m12 divider blue lighten-3"></div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">
+         Notificacion Nueva<i class="material-icons right">more_vert</i>
+        </span>
+        <div class="row col m12 divider blue lighten-3"></div>
+        <div class="row">
+          <div class="col m4 center">
+            <form method="POST" action="/mark_notification">
+              <input type="hidden" name="theId" value="<%= element.notificacion.id %>"></input>
+              <button type="submit" class=" btn-small btn-floating  waves-effect waves-light blue lighten-3  z-depth-3">
+                <i class="material-icons">done</i>
+              </button>
+            </form>
+          </div>
+          <div class="col m4 center">
+            <form  method="POST" action="/see_document">
+              <input type="hidden" name="nombre" value="Notificaciones"></input>
+              <input type="hidden" name="camino" value="/notification"></input>
+              <input type="hidden" name="theId" value="<%= element.documento.id %>"></input>
+              <button class=" btn-small btn-floating  waves-effect waves-light blue lighten-3 z-depth-3" type="submit"><i class="material-icons">local_library</i></button>
+            </form>
+          </div>
+          <div class="col m4 center">
+            <form method="POST" action="/delete_notification">
+              <input type="hidden" name="theId" value="<%= element.notificacion.id %>"></input>
+              <button type="submit" class=" btn-small btn-floating  waves-effect waves-light blue lighten-3 z-depth-3">
+                <i class="material-icons">delete</i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">
+          <i class="material-icons right">close</i>
+          <h6>En: <%= element.documento.name %></h6>
+        </span>
+        <p>
+          <div class="col m12 divider blue lighten-3"></div>
+          Descripción:<br><%= element.documento.description %><br>
+          <div class="col m12 divider blue lighten-3"></div>
+          Fecha: <%= element.notificacion.date %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <% end %>
+  <div class="row col m12 divider blue lighten-3"></div>
+</div>
+
+
+
+<div class="row">
+  <%@documentNotificationEtq && @documentNotificationEtq.each do |element| %>
+  <%if element.info.seen %>
+  <div class="section container col m6 l3">
+    <div class="card z-depth-3 white">
+      <div class="row col m12 divider blue lighten-3"></div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">
+          Notificacion Leida<i class="material-icons right">more_vert</i>
+        </span>
+        <div class="row col m12 divider blue lighten-3"></div>
+        <div class="row">
+          <div class="col m4 center">
+            <form method="POST" action="/mark_notification">
+              <input type="hidden" name="theId" value="<%= element.notificacion.id %>"></input>
+              <button type="submit" class=" btn-small btn-floating  waves-effect waves-light blue lighten-3  z-depth-3">
+                <i class="material-icons">done</i>
+              </button>
+            </form>
+          </div>
+          <div class="col m4 center">
+            <form  method="POST" action="/see_document">
+              <input type="hidden" name="theId" value="<%= element.documento.id %>"></input>
+              <button class=" btn-small btn-floating  waves-effect waves-light blue lighten-3 z-depth-3" type="submit"><i class="material-icons">visibility</i></button>
+            </form>
+          </div>
+          <div class="col m4 center">
+            <form method="POST" action="/delete_notification">
+              <input type="hidden" name="theId" value="<%= element.notificacion.id %>"></input>
+              <button type="submit" class=" btn-small btn-floating  waves-effect waves-light blue lighten-3 z-depth-3">
+                <i class="material-icons">delete</i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">
+          <i class="material-icons right">close</i>
+          <h6><%= element.documento.name %></h6>
+        </span>
+        <p>
+          <div class="col m12 divider blue lighten-3"></div>
+          Descripción:<br><%= element.documento.description %><br>
+          <div class="col m12 divider blue lighten-3"></div>
+          Fecha:<%= element.notificacion.date %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <% end %>
+</div>
