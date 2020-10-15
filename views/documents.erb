@@ -1,60 +1,63 @@
-<div class="row nav-wrapper">
-  <div class="col m3 l3">
-    <div class="row blue-grey lighten-5">
-      <div class="input-field col m8 l8">
-        <input type="text" id="searchDocuments" class="autocomplete" name="document">
-        <label for="searchDocuments">Buscar Documento</label>
+
+<div class="row blue-grey lighten-5">
+  <form class="" action="documents_filter" method="GET">
+    <div class="col m2 l3">
+      <div class="row">
+        <div class="input-field col s10 m10 l10">
+          <select  class="mi-selector" name='filterName' id="doc">
+            <option value="" disabled selected>Elija el Documento</option>
+            <%@document && @document.each do |element| %>
+            <option value='<%= element.id%>'><%= element.name%></option>
+            <% end %>
+          </select>
+          <label for="doc">Documento</label>
+        </div>
       </div>
-      <div class="input-field col m4 l4">
-        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
-          <i class="material-icons">search</i>
-        </button>
-      </div>
-      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
     </div>
-  </div>
-  <div class="col m3 l3">
-    <div class="row blue-grey lighten-5">
-      <div class="input-field col m8 l8">
-        <input type="text" id="fecha" class="datepicker">
-        <label for="fecha">Filtrar por Fecha</label>
+    <div class="col m2 l3">
+      <div class="row">
+        <div class="input-field col s10 m10 l10">
+          <select  class="mi-selector" name='category' id="cat">
+            <option value="" disabled selected>Elija la Categoria</option>
+            <%@allCat && @allCat.each do |element| %>
+            <option value='<%= element.id%>'><%= element.name%></option>
+            <% end %>
+          </select>
+          <label for="cat">Categoria</label>
+        </div>
       </div>
-      <div class="input-field col m4 l4">
-        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
-          <i class="material-icons">calendar</i>
-        </button>
-      </div>
-      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
     </div>
-  </div>
-  <div class="col m3 l3">
-    <div class="row blue-grey lighten-5">
-      <div class="input-field col m8 l8">
-        <input type="text" id="categories" class="autocomplete">
-        <label for="categories">Filtrar por Categoria</label>
+    <div class="col m2 l3">
+      <div class="row">
+        <div class="input-field col s10 m10 l10">
+          <select  class="form-control mi-selector" name='filter'id="ord">
+            <option value="" disabled selected>ordenar por:</option>
+            <option value='date0'>Fecha</option>
+            <option value='date1'>Nombre</option>
+          </select>
+          <label for="ord">Orden:</label>
+        </div>
       </div>
-      <div class="input-field col m4 l4">
-        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
-          <i class="material-icons">search</i>
-        </button>
-      </div>
-      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
     </div>
-  </div>
-  <div class="col m3 l3">
-    <div class="row blue-grey lighten-5">
-      <div class="input-field col m8 l8">
-        <input type="text" id="" class="autocomplete">
-        <label for="">            </label>
+    <div class="col m2 l2">
+      <div class="row">
+        <div class="input-field col s10 m10 l10">
+          <input type="text" id="fecha" class="datepicker" name="dateDoc">
+          <label for="fecha">Fecha</label>
+        </div>
       </div>
-      <div class="input-field col m4 l4">
-        <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
-          <i class="material-icons">        </i>
-        </button>
-      </div>
-      <div class="section valign-wrapper blue lighten-3 z-depth-4 col s12 m12 l12"></div>
     </div>
-  </div>
+    <div class="col m2 l1">
+      <div class="row">
+        <div class="input-field col s10 m10 l10">
+          <button type="submit" class="btn-floating btn waves-effect waves-light blue lighten-3 z-depth-3">
+            <i class="material-icons">search</i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="section blue-grey lighten-5 col s12 m12 l12"></div>
+  </form>
 </div>
 
 

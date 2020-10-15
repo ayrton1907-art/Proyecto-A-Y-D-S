@@ -166,18 +166,26 @@ class App < Sinatra::Base
   get "/documents" do #FUNCIONA
     @page_name = "Documentos"
     @document = Document.all
-    filter()
+    @allCat = Category.all
     erb :documents, :layout =>@layoutEnUso
   end
 
 
-  get "/search_documents" do #FUNCIONA
-    Document.all.to_json
-  end
 
-  get "/search_categories" do #FUNCIONA
-    Category.all.to_json
-  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   get "/all_document" do #FUNCIONA
     @page_name = "Documentos"
@@ -185,7 +193,6 @@ class App < Sinatra::Base
     @allDocument = Document.all
     @allCategory = Category.all
     @usersName = User.all
-    filter()
     erb :all_document, :layout =>@layoutEnUso
   end
 
@@ -222,7 +229,6 @@ class App < Sinatra::Base
       @errormsg ="El documento fue cargado."
       @allCat = Category.all
       @userName = User.find(id: session[:user_id])
-      filter()
     else
       @userCreate = User.all
       @categories = Category.all
@@ -398,71 +404,95 @@ class App < Sinatra::Base
     end
   end
 
-  def filter() #Mejorar
-    if params[:filterName] && params[:filterName]!=""
-      if params[:dateDoc] && params[:dateDoc] != ""
-        if params[:filter] && params[:filter] == "dateO"
-          if params[:category] && params[:category] != ""
-            @idCategory = Category.find(name: params[:category]) #Opcion 1  con categoria filtro fecha y nombre
-            @allPdf = Document.where(name: params[:filterName], date: params[:dateDoc], category_id: @idCategory.id).order(:date)
-          else #opcion 2 sin categoria
-            @allPdf = Document.where(name: params[:filterName], date: params[:dateDoc]).order(:date)
-          end
-        else
-          if params[:category] && params[:category] != ""
-            @idCategory = Category.find(name: params[:category]) #opcion 3 sin filtro con categoria
-            @allPdf = Document.where(name: params[:filterName], date: params[:dateDoc], category_id: @idCategory.id).order(:name)
-          else #opcion 4 sin filtro y sin categoria
-            @allPdf = Document.where(name: params[:filterName], date: params[:dateDoc]).order(:name)
-          end
-        end
+  get "/documents_filter" do
+    @page_name = "Documentos"
+    @allCat = Category.all
+    # newDate = ""
+    # if params[:dateDoc] && params[:dateDoc] != ""
+    #   newDate = newDat (params[:dateDoc])
+    # end
+    @document =  Document.all
+    if params[:filter]
+      if params[:filter] == "date0"
+        @document = Document.order(:date).all
       else
-        if params[:filter] && params[:filter] == "dateO"
-          if params[:category] && params[:category] != "" #opcion 5 sin datedoc con filtro y categoria
-            @idCategory = Category.find(name: params[:category])
-            @allPdf = Document.where(name: params[:filterName], category_id: @idCategory.id).order(:date)
-          else #opcion 6 sin datedoc con filtro sin categoria
-            @allPdf = Document.where(name: params[:filterName]).order(:date)
-          end
-        else #opcion 7 sin datedoc sin filtro sin categoria
-          @allPdf = Document.where(name: params[:filterName]).order(:name)
-        end
-      end
-    else
-      if params[:dateDoc] && params[:dateDoc] != ""
-        if params[:filter] && params[:filter] == "dateO"
-          if params[:category] && params[:category] != "" #opcion 8 sin filename con filtro datedoc y categoria
-            @idCategory = Category.find(name: params[:category])
-            @allPdf = Document.where(date: params[:dateDoc], category_id: @idCategory.id).order(:date)
-          else #opcion 9 sin filename con filtro datedoc pero sin categoria
-            @allPdf = Document.where(date: params[:dateDoc]).order(:date)
-          end
-        else
-          if params[:category] && params[:category] != "" #opcion 10 sin filname filtro pero con datedoc y categoria
-            @idCategory = Category.find(name: params[:category])
-            @allPdf = Document.where(date: params[:dateDoc], category_id: @idCategory.id).order(:name)
-          else #opcion 11 sin filname filto y categoria per con datedoc
-            @allPdf = Document.where(date: params[:dateDoc]).order(:name)
-          end
-        end
-      else
-        if params[:filter] && params[:filter] == "dateO"
-          if params[:category] && params[:category] != "" #opcion 12 sin filename datedoc pero con filtro y categoria
-            @idCategory = Category.find(name: params[:category])
-            @allPdf = Document.where(category_id: @idCategory.id).order(:date)
-          else #opcion 13 sin filename datedoc categoria pero con filter
-            @allPdf = Document.order(:date)
-          end
-        else
-          if params[:category] && params[:category] != "" # opcion14 solo categoria
-            @idCategory = Category.find(name: params[:category])
-            @allPdf = Document.where(category_id: @idCategory.id).order(:name)
-          else #opcion15 sin nada ordenar por nombre
-            @allPdf = Document.order(:name)
-          end
-        end
+        @document = Document.order(:name).all
       end
     end
+    if  params[:filterName]
+      @document = Document.where(id: params[:filterName])
+    end
+    if params[:category]
+      @document2 = []
+      @document.each do |element|
+        if  params[:category] == element.category_id
+          @document2 << (element)
+        end
+      end
+      @document = @document2
+    end
+    # if newDate != ""
+    #   @document2 = @document.where(date: newDate).all
+    #   @document = @document2
+    # end
+    # erb :documents, :layout =>@layoutEnUso
+
+    erb :documents, :layout =>@layoutEnUso
+  end
+
+  def filter(newDate, nameDoc, order, category) #Mejorar
+    if nameDoc != ""
+      @document = Document.find(name: nameDoc)
+      return @document
+    end
+    # if order != ""
+    #   if order == date0
+    #     @document = Document.all.order(:date)
+    #   else
+    #     @document = Document.all.order(:name)
+    #   end
+    # end
+    # if category != ""
+    #   @idCategory = Category.find(id: params[:category])
+    #   @document = Document.where(category_id: @idCategory.id).all
+    # end
+    # if newDate != ""
+    #   @document2 = @document.where(date: newDate).all
+    #   @document = @document2
+    # end
+    @allCat = Category.all
+    erb :documents, :layout =>@layoutEnUso
+  end
+
+  def newDat(date)
+    # dateNot = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    case date[0,3]
+    when "Jan"
+      newDate = date[8,12] + "-" + "01" + "-" + date[4,6]
+    when "Feb"
+      newDate = date[8,12] + "-" + "02" + "-" + date[4,6]
+    when "Mar"
+      newDate = date[8,12] + "-" + "03" + "-" + date[4,6]
+    when "Apr"
+      newDate = date[8,12] + "-" + "04" + "-" + date[4,6]
+    when "May"
+      newDate = date[8,12] + "-" + "05" + "-" + date[4,6]
+    when "Jun"
+      newDate = date[8,12] + "-" + "06" + "-" + date[4,6]
+    when "Jul"
+      newDate = date[8,12] + "-" + "07" + "-" + date[4,6]
+    when "Aug"
+      newDate = date[8,12] + "-" + "08" + "-" + date[4,6]
+    when "Sep"
+      newDate = date[8,12] + "-" + "09" + "-" + date[4,6]
+    when "Oct"
+      newDate = date[8,12] + "-" + "10" + "-" + date[4,6]
+    when "Nov"
+      newDate = date[8,12] + "-" + "11" + "-" + date[4,6]
+    when "Dec"
+      newDate = date[8,12] + "-" + "12" + "-" + date[4,6]
+    end
+    return newDate
   end
 
 end
