@@ -412,29 +412,27 @@ class App < Sinatra::Base
     #   newDate = newDat (params[:dateDoc])
     # end
     @document =  Document.all
-    if params[:filter]
-      if params[:filter] == "date0"
-        @document = Document.order(:date).all
-      else
-        @document = Document.order(:name).all
-      end
+    if params[:filter] == "date0"
+      @document = Document.order(:date).all
+    else
+      @document = Document.order(:name).all
     end
-    if  params[:filterName]
-      @document = Document.where(id: params[:filterName])
-    end
-    if params[:category]
-      @document2 = []
+    if  params[:category]
+      @documentCat = Document.where(category_id: params[:category]).all
+      @document3 = []
       @document.each do |element|
-        if  params[:category] == element.category_id
-          @document2 << (element)
+        if @documentCat.include?(element)
+          @document3 << element
         end
       end
+      @document = @document3
+    end
+    if params[:dateDoc] != ""
+      newDate = newDat (params[:dateDoc])
+      # newDate = "2020-10-15"
+      @document2 = Document.where(date: newDate).all
       @document = @document2
     end
-    # if newDate != ""
-    #   @document2 = @document.where(date: newDate).all
-    #   @document = @document2
-    # end
     # erb :documents, :layout =>@layoutEnUso
 
     erb :documents, :layout =>@layoutEnUso
@@ -465,7 +463,7 @@ class App < Sinatra::Base
   end
 
   def newDat(date)
-    # dateNot = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    newDate = ""
     case date[0,3]
     when "Jan"
       newDate = date[8,12] + "-" + "01" + "-" + date[4,6]
@@ -486,7 +484,7 @@ class App < Sinatra::Base
     when "Sep"
       newDate = date[8,12] + "-" + "09" + "-" + date[4,6]
     when "Oct"
-      newDate = date[8,12] + "-" + "10" + "-" + date[4,6]
+      newDate = date[8,12] + "-" + "10" + "-" + ""
     when "Nov"
       newDate = date[8,12] + "-" + "11" + "-" + date[4,6]
     when "Dec"
