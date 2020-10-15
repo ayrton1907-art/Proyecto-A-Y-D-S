@@ -27,7 +27,7 @@ class App < Sinatra::Base
     logger.info "Configurations"
     logger.info settings.db_adapter
     logger.info "--------------"
-    @document = Document.all
+    @document = Document.order(:date).reverse.all
     erb :index
   end
 
@@ -63,11 +63,14 @@ class App < Sinatra::Base
         @page = (request.path_info)
       end
     end
-    @urlAdmin = ["/allCategory","/create_admin","/allDocument", "/migrate_documents",]
+    @urlAdmin = ["/all_category","/all_document","/modify_document"]
     if !session[:type] &&  @urlAdmin.include?(request.path_info)
       redirect "/profile"
     end
-    @urlUser = ["/profile","/subscriptions", "/edit_user","/documents","/notification"]
+    if session[:type] &&  "/documents" == (request.path_info)
+      redirect "/all_document"
+    end
+    @urlUser = ["/profile","/subscriptions", "/edit_user","/documents","/notification","/view_document"]
     if !session[:isLogin]  &&  @urlUser.include?(request.path_info)
       redirect "/"
     end
@@ -165,8 +168,8 @@ class App < Sinatra::Base
 
   get "/documents" do #FUNCIONA
     @page_name = "Documentos"
-    @document = Document.all
-    @allCat = Category.all
+    @document = Document.order(:name).all
+    @allCat = Category.order(:name).all
     erb :documents, :layout =>@layoutEnUso
   end
 
@@ -189,10 +192,10 @@ class App < Sinatra::Base
 
   get "/all_document" do #FUNCIONA
     @page_name = "Documentos"
-    @userName = User.find(id: session[:user_id])
-    @allDocument = Document.all
-    @allCategory = Category.all
-    @usersName = User.all
+    @user_name = User.find(id: session[:user_id])
+    @all_document = Document.order(:name).all
+    @all_category = Category.order(:name).all
+    @usersName = User.order(:name).all
     erb :all_document, :layout =>@layoutEnUso
   end
 
@@ -227,11 +230,12 @@ class App < Sinatra::Base
         @notification_cat.add_user(element)
       end
       @errormsg ="El documento fue cargado."
-      @allCat = Category.all
+      @allCat = Category.order(:name).all
       @userName = User.find(id: session[:user_id])
     else
-      @userCreate = User.all
-      @categories = Category.all
+      @userCreate = User.order(:name).all
+      @categories = Category.order(:name).all
+
       @errormsg = "El Documento/descripción ya existen"
     end
   end
@@ -241,7 +245,7 @@ class App < Sinatra::Base
     @page_before = "/all_document"
     @page_interna = "Editar Documento"
     @modDocument = Document.find(id: params[:theId])
-    @allCategory = Category.all
+    @allCategory = Category.order(:name).all
     @modCat = Category.find(id: @modDocument.category_id)
     @usersTag = User.where(documents: @modDocument)
     @usersName = User.except(@usersTag).all
@@ -281,8 +285,8 @@ class App < Sinatra::Base
 
   get "/all_category" do #FUNCIONA
     @page_name = "Categorias"
-    @allCategory  = Category.all
-    @catSelect = Category.all
+    @allCategory  = Category.order(:name).all
+    # @catSelect = Category.all
     erb :all_category, :layout =>@layoutEnUso
   end
 
@@ -404,38 +408,42 @@ class App < Sinatra::Base
     end
   end
 
-  get "/documents_filter" do
+  post "/documents_filter" do
     @page_name = "Documentos"
-    @allCat = Category.all
-    # newDate = ""
-    # if params[:dateDoc] && params[:dateDoc] != ""
-    #   newDate = newDat (params[:dateDoc])
-    # end
-    @document =  Document.all
-    if params[:filter] == "date0"
-      @document = Document.order(:date).all
+    @all_category = Category.order(:name).all
+    if params[:document_id]
+      @document = Document.where(id: params[:document_id]).all
     else
-      @document = Document.order(:name).all
-    end
-    if  params[:category]
-      @documentCat = Document.where(category_id: params[:category]).all
-      @document3 = []
-      @document.each do |element|
-        if @documentCat.include?(element)
-          @document3 << element
-        end
+      if params[:filter] == "date0"
+        @document = Document.order(:date).reverse.all
+      else
+        @document = Document.order(:name).all
       end
-      @document = @document3
+      if  params[:category_id]
+        @documentCat = Document.where(category_id: params[:category_id]).all
+        @document3 = []
+        @document.each do |element|
+          if @documentCat.include?(element)
+            @document3 << element
+          end
+        end
+        @document = @document3
+      end
+      # if params[:dateDoc] != ""
+      #   newDate = newDat (params[:dateDoc])
+      #   # newDate = "2020-10-15"
+      #   @document2 = Document.where(date: newDate).all
+      #   @document = @document2
+      # end
     end
-    if params[:dateDoc] != ""
-      newDate = newDat (params[:dateDoc])
-      # newDate = "2020-10-15"
-      @document2 = Document.where(date: newDate).all
-      @document = @document2
+    if session[:type]
+      @all_document = @document
+      @usersName = User.order(:name).all
+      erb :all_document, :layout =>@layoutEnUso
+    else
+      @all_document = @document
+      erb :documents, :layout =>@layoutEnUso
     end
-    # erb :documents, :layout =>@layoutEnUso
-
-    erb :documents, :layout =>@layoutEnUso
   end
 
   def filter(newDate, nameDoc, order, category) #Mejorar
@@ -484,7 +492,7 @@ class App < Sinatra::Base
     when "Sep"
       newDate = date[8,12] + "-" + "09" + "-" + date[4,6]
     when "Oct"
-      newDate = date[8,12] + "-" + "10" + "-" + ""
+      newDate = date[8,12] + "-" + "10" + "-" + date[4,6]
     when "Nov"
       newDate = date[8,12] + "-" + "11" + "-" + date[4,6]
     when "Dec"
