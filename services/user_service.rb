@@ -9,17 +9,12 @@ require './models/init'
 class UserService
   def self.login(email, password, session)
     @current_user = User.find(email: email)
-    if @current_user
-      if @current_user.password == password
-        session[:is_login] = true
-        session[:user_id] = @current_user.id
-        session[:type] = @current_user.admin
-      else
-        raise ArgumentError, 'Contraseña incorrecta'
-      end
-    else
-      raise ArgumentError, 'No existe un usuario con ese email'
-    end
+    return raise ArgumentError, 'No existe un usuario con ese email' unless @current_user
+    return raise ArgumentError, 'Contraseña incorrecta' unless @current_user.password == password
+
+    session[:is_login] = true
+    session[:user_id] = @current_user.id
+    session[:type] = @current_user.admin
   end
 
   def self.create_user(user)
@@ -33,10 +28,14 @@ class UserService
                          password: user['password'],
                          rol: user['rol'],
                          admin: user['admin'])
-    @new_user.save
-    unless User.find(dni: user['dni'])
-      raise ArgumentError, 'El usuario no se creo correctamente, ' \
-      'Intente nuevamente'
-    end
+    save_user(@new_user)
+  end
+
+  def self.save_user(user)
+    user.save
+    return unless User.find(dni: user['dni']).nil?
+
+    raise ArgumentError, 'El usuario no se creo correctamente, ' \
+    'Intente nuevamente'
   end
 end

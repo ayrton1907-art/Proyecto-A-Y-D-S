@@ -9,6 +9,7 @@ require './models/init'
 class CategoryService
   def self.crear_categoria(nombre, descripcion)
     return raise ArgumentError, 'Ya existe una categoria con ese nombre' unless Category.find(name: nombre)
+
     @category = Category.new(name: nombre, description: descripcion)
     return raise ArgumentError, 'La categoria no fue creada' unless @category.save
   end
@@ -16,12 +17,12 @@ class CategoryService
   def self.modificar_categoria(nombre, description, id)
     @old_cat = Category.find(id: id)
     return raise ArgumentError, 'Categoria no encontrada' unless @old_cat
-      @cat_modify = @old_cat
-      @cat_modify.update(name: nombre,
-                         description: description)
-      if @old_cat.name == @cat_modify && @old_cat.description == @cat_modify.description
-        raise ArgeumentError, 'La categoria no fue modificada'
-      end
+
+    @cat_modify = @old_cat
+    @cat_modify.update(name: nombre,
+                       description: description)
+    return raise ArgeumentError, 'La categoria no fue modificada' unless @old_cat.name != @cat_modify ||
+                                                                         @old_cat.description != @cat_modify.description
   end
 
   def self.eliminar_categoria(id_cat_eliminar, id_nueva_categoria)
@@ -31,13 +32,18 @@ class CategoryService
     raise ArgumentError, 'No se encontro la categoria para migrar' unless @category_selected
 
     @document = Document.where(category_id: @category_delete.id)
-    @document.each do |element|
-      element.update(category_id: @category_selected.id)
-    end
+    migrar(@document, @category_selected)
+
     @all_docs = Document.where(category_id: @category_delete.id)
-    if @all_docs.empty?
-      @category_delete.remove_all_users
-      @category_delete.delete
+    return unless @all_docs.empty?
+
+    @category_delete.remove_all_users
+    @category_delete.delete
+  end
+
+  def self.migrar(documentos, nueva_cat)
+    documentos.each do |element|
+      element.update(category_id: nueva_cat.id)
     end
   end
 end
