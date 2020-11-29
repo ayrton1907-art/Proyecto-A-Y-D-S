@@ -9,12 +9,12 @@ require './models/init'
 class FilterService
   def self.filter(document_id, filter, category_id, date_filter)
     @all_documents = Document.order(:name).all
-    if document_id
-      @all_documents = Document.where(id: document_id).all
-      show_filter(@all_documents)
-    else
-      filter_advanced(@all_documents, filter, category_id, date_filter)
-    end
+    @all_documents = if document_id
+                       Document.where(id: document_id).all
+                     else
+                       filter_advanced(@all_documents, filter, category_id, date_filter)
+                     end
+    @all_documents
   end
 
   def self.filter_advanced(_all_documents, filter, category_id, date_filter)
@@ -25,7 +25,7 @@ class FilterService
     elsif date_filter != ''
       filter_date(@all_documents, date_filter)
     else
-      show_filter(@all_documents)
+      @all_documents
     end
   end
 
@@ -36,7 +36,7 @@ class FilterService
     elsif date_filter != ''
       filter_date(@all_documents_order, date_filter)
     else
-      show_filter(@all_documents_order)
+      @all_documents_order
     end
   end
 
@@ -49,44 +49,40 @@ class FilterService
     if date_filter != ''
       filter_date(@documents, date_filter)
     else
-      show_filter(@documents)
+      @documents
     end
   end
 
-  def self.filter_date(_all_documents, date_filter)
-    return unless date_filter != ''
+  def self.filter_date(all_documents, date)
+    return unless date != ''
 
-    new_date = new_date_format(date_filter)
-    @document_date = Document.where(date: new_date).all
-    @documents = []
-    oder_document&.each do |element|
-      @documents << element if @document_date.include?(element)
-    end
-    show_filter(@documents)
+    new_date = new_date(date)
+    @document_date = Document.where(date: new_date[0..-3]).all
+    @documents = document_order(all_documents)
+    @documents
   end
 
-  def self.show_filter(all_document)
-    @all_documents = all_document
-    @all_categories = Category.order(:name).all
-    if session[:type]
-      @users_name = User.order(:name).all
-      erb :all_document, layout: @current_layout
-    else
-      erb :documents, layout: @current_layout
-    end
-  end
-
-  def self.new_date_format(date)
-    month_num = [1..12]
+  def self.new_date(date)
+    new_date = ''
+    month_num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     month = %w[Jan Feb Apr May Jun Jul Aug Sep Oct Nov Dec]
     month_num.each do |element|
-      "#{date[8, 12]}-#{element}-#{date[4, 6]}" if date[0, 3] == month[element]
+      new_date = "#{date[8, 12]}-11-#{date[4, 4]}" if date[0, 3] == month[element]
     end
+    new_date
+  end
+
+  def self.document_order(all_documents)
+    @documents = []
+    all_documents&.each do |element|
+      @documents << element if @document_date.include?(element)
+    end
+    @documents
   end
 
   def self.order_document(documents, filter)
     if filter == 'date0'
-      Document.reverse_order(:date)
+      Document.reverse_order(:date).all
     else
       documents
     end

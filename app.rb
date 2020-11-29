@@ -47,7 +47,6 @@ class App < Sinatra::Base
     erb :index
   end
 
-
   get '/miwebsoket' do
     if !request.websocket?
       redirect '/'

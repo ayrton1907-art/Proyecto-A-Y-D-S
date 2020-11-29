@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html height="100%">
   <head>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- <link rel="stylesheet" href="/estilo.css"> -->
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
-  <body> 
+  <body>
     <div class="navbar-fixed">
       <nav class="row black-text  blue lighten-2">
         <div class="nav-wrapper">
@@ -60,13 +58,13 @@
           <form class="card-body" for="validation01" method="POST" action="/new_user">
             <div class="row">
               <div class="input-field col s12">
-                <input id="name" type="text" class="validate" name="name" required minlength=3 maxlength=40>
+                <input id="name" type="text" class="validate" name="name" required>
                 <label for="name">Nombre</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <input id="surname" type="text" class="validate" name="surname" required minlength=3 maxlength=40>
+                <input id="surname" type="text" class="validate" name="surname" required>
                 <label for="surname">Apellido</label>
               </div>
             </div>
@@ -114,9 +112,19 @@
     </div></li>
     <li><div class="section2"></div> </li>
     </ul>
-
-    <div class="row">
-      <% @document && @document.each do |element| %>
+    <% if defined? errorMessage %>
+      <blockquote>
+        <h6><%= errorMessage %></h6>
+      </blockquote>
+    <% end %>
+    <% if defined? url %>
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light modal-trigger  red z-depth-3" href="<%= url %>"><i class="material-icons">arrow_back</i></a>
+      </div>
+    <% end %>
+    <% if defined? document %>
+      <div class="row">
+      <% document.each do |element| %>
         <div class="container col m6 l3">
           <div class="card small">
             <div class="card-image waves-effect waves-block waves-light">
@@ -127,7 +135,8 @@
                 <span class="card-title activator grey-text text-darken-4"><%= element.name%><i class="material-icons right">more_vert</i></span>
                 <div class="col l6">
                   <p>
-                    <a class="btn-floating btn waves-effect waves-light blue lighten-3" href="<%=element.fileDocument%>" download="<%= element.name%>"><i class="material-icons">file_download</i></a>
+                    <a class="btn-floating btn waves-effect waves-light blue lighten-3" href="<%=element.fileDocument%>" download="<%= element.name%>"><i class="material-icons">file_download</i>
+                    </a>
                   </p>
                 </div>
               </div>
@@ -140,9 +149,65 @@
           </div>
         </div>
       <% end %>
+      </div>
+    <% end %>
+    <% if defined? all_categories %>
+      <div class="row">
+      <%all_categories.each do |element| %>
+        <div class="col m6 l3">
+          <div class="card  z-depth-3 blue lighten-3">
+            <div class="card-content blue lighten-3">
+              <span class="card-title "><%=element.name%></span>
+              <p><%=element.description%></p>
+            </div>
+            <ul class="card-action collapsible white">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">edit</i>Modificar</div>
+                <div class="white collapsible-body">
+                  <form method="POST" action="/modify_category">
+                    <input type="hidden" name="modify_id" value="<%=element.id%>"></input>
+                    <div class="form-group input-field">
+                      <label class="active black-text">Nombre</label>
+                      <input type="text" class="black-text" name="name" value="<%= element.name %>"></input>
+                    </div>
+                    <div class="form-group input-field">
+                      <label class="active black-text">Descripción</label>
+                      <input type="text" class="form-control rounded-pill" name="description" value="<%= element.description %>"></input>
+                    </div>
+                    <div class="form-group center">
+                      <button type="submit" class="btn blue lighten-3  waves-effect waves-light black-text z-depth-3" onclick="enviar();">Guardar</button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">delete</i>Eliminar</div>
+                <div class="white collapsible-body">
+                  <form method="POST" action="/delete_category">
+                    <input type="hidden" name="id_delete" value="<%=element.id%>"></input>
+                    <div class="form-group">
+                      <label class="black-text">Migrar a:</label>
+                      <select  name="id_select" placeholder="Seleccione la categoria">
+                        <% @all_categories && @all_categories.each do |element| %>
+                        <option class="black-text" value="<%=element.id%>"><%=element.name%></option>
+                        <% end %>
+                      </select>
+                    </div>
+                    <div class="form-group center">
+                      <button type="submit" class="btn blue lighten-3 waves-effect waves-light black-text z-depth-3" onclick="enviar();" >Eliminar</button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
+    <% end %>
 
-    <footer class="footer main body page-footer black-text blue lighten-2">
+
+    <footer class=" main body page-footer black-text blue lighten-2">
       <div class="row">
         <div class="col l6 s12">
           <h5 class="black-text">Sistema De Notificaciones UNRC</h5>
@@ -166,6 +231,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!--JavaScript con SideNav y WebSocket -->
+
     <script type="text/javascript" src="./js/myscript.js"></script>
   </body>
 </html>

@@ -18,14 +18,13 @@ class BeforeController < Sinatra::Base
       @current_layout = BeforeService.layout(session[:type])
     end
     @url_admin = ['/all_category', '/all_document', '/modify_document']
-     redirect '/profile' if !session[:type] && @url_admin.include?(
-       request.path_info
-     )
-     redirect '/all_document' if session[:type] && (request.path_info) == '/documents'
-     @url_user =
-       ['/profile', '/subscriptions', '/edit_user', '/documents',
-        '/notification', '/view_document']
-     redirect '/' if !session[:is_login] && @url_user.include?(request.path_info)
+    redirect '/profile' if !session[:type] && @url_admin.include?(
+      request.path_info
+    )
+    redirect '/all_document' if session[:type] && (request.path_info) == '/documents'
+    @url_user =
+      ['/profile', '/subscriptions', '/edit_user', '/documents',
+       '/notification', '/view_document']
+    redirect '/' if !session[:is_login] && @url_user.include?(request.path_info)
   end
-
 end

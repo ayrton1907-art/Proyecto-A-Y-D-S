@@ -12,21 +12,12 @@ require './services/before_service'
 # Controller para Login/logout
 class LoginController < BeforeController
   post '/user_login' do
-    @current_user = User.find(email: params[:email])
-    if @current_user
-      if @current_user.password == params[:password]
-        session[:is_login] = true
-        session[:user_id] = @current_user.id
-        session[:type] = @current_user.admin
-        redirect '/profile'
-      # else
-      #   @message_screen = 'La contraeña es incorrecta.'
-      #   redirect '/'
-      end
-    # else
-    #   @message_screen = 'El Email es incorrecto.'
-    #   redirect '/'
-    end
+    UserService.login(params[:email], params[:password], session)
+    redirect '/profile'
+  rescue ArgumentError => e
+    return erb :error, locals: { errorMessage: e.message,
+                                 url: '/',
+                                 document: Document.order(:date).reverse.all }
   end
 
   get '/logout' do

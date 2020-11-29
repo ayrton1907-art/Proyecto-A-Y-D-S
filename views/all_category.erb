@@ -1,7 +1,7 @@
 <div class="row">
   <% @all_categories && @all_categories.each do |element| %>
     <div class="col m6 l3">
-      <div class="card  z-depth-3 blue lighten-3">
+      <div class="card z-depth-3 blue lighten-3">
         <div class="card-content blue lighten-3">
           <span class="card-title "><%=element.name%></span>
           <p><%=element.description%></p>
@@ -14,11 +14,11 @@
                 <input type="hidden" name="modify_id" value="<%=element.id%>"></input>
                 <div class="form-group input-field">
                   <label class="active black-text">Nombre</label>
-                  <input type="text" class="black-text" name="name" value="<%= element.name %>"></input>
+                  <input type="text" class="black-text" name="name" value="<%= element.name %>" minlength=3 maxlength=50></input>
                 </div>
                 <div class="form-group input-field">
                   <label class="active black-text">Descripción</label>
-                  <input type="text" class="form-control rounded-pill" name="description" value="<%= element.description %>"></input>
+                  <input type="text" class="form-control rounded-pill" name="description" value="<%= element.description %>" minlength=3 maxlength=300></input>
                 </div>
                 <div class="form-group center">
                   <button type="submit" class="btn blue lighten-3  waves-effect waves-light black-text z-depth-3" onclick="enviar();">Guardar</button>
@@ -48,8 +48,9 @@
         </ul>
       </div>
     </div>
-  <% end %>
+<% end %>
 </div>
+
 <!-- Modal Trigger -->
 <div class="fixed-action-btn">
   <a class="waves-effect waves-light btn-large modal-trigger btn-floating red " href="#modal1"><i class="material-icons">add</i></a>
@@ -64,11 +65,11 @@
     <div class="modal-content">
       <div class="form-group input-field">
         <label class="validate black-text" >Nombre de la Categoria:</label>
-        <input class="active" id="input" type="text" name="name" required>
+        <input class="active" id="input" type="text" name="name" required minlength=3 maxlength=50>
       </div>
       <div class="form-group input-field">
         <label class="active black-text">Descripcion de la categoria:</label>
-        <input type="text" name="description" required>
+        <input type="text" name="description" required minlength=3 maxlength=300>
       </div>
     </div>
     <div class="modal-footer">

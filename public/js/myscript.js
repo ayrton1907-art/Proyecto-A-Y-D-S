@@ -18,10 +18,12 @@ window.onload = function(){
     }
   })();
 }
+
 function enviar(){
   var msgs = 'mensaje recibido';
   ws.send(msgs);
 }
+
 function recibir(){
   console.log("ENVIO");
   location.reload(true);

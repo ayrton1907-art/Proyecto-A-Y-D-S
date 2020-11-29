@@ -9,8 +9,8 @@ class Document < Sequel::Model
   def validate
     super
     validates_presence %i[name description date fileDocument]
-    validates_length_range 3..50, :name
-    validates_length_range 3..1000, :description
+    validates_length_range 10..100, :name
+    validates_length_range 10..1000, :description
     validates_type String, %i[name description fileDocument]
     validates_type String, :date
     validates_unique(:name)

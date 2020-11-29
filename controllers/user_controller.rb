@@ -12,43 +12,36 @@ require './services/user_service'
 # Controller para User
 class UserController < BeforeController
   post '/new_user' do
-    unless User.find(dni: params[:dni])
-      @new_user = User.new(
-        name: params[:name],
-        surname: params[:surname],
-        dni: params[:dni],
-        email: params[:email],
-        password: params[:password],
-        rol: params[:rol]
-      )
-      @new_user.admin = false
-      if @new_user.save
-        @message_screen = 'La cuenta fue creada.'
-        redirect '/profile'
-      else
-        @message_screen = 'La cuenta no fue creada.'
-        redirect '/'
-      end
-    end
+    @user = { 'name' => params[:name],
+              'surname' => params[:surname],
+              'dni' => params[:dni],
+              'email' => params[:email],
+              'password' => params[:password],
+              'rol' => params[:rol],
+              'type' => false }
+    UserService.create_user(@user)
+    redirect '/profile'
+  rescue ArgumentError => e
+    return erb :error, locals: { errorMessage: e.message,
+                                 url: '/',
+                                 document: Document.order(:date).reverse.all }
   end
 
   post '/create_user' do
-    begin
-      UserService.revisar_datos(params[:dni], params[:email], params[:name], params[:surname])
-      @new_user = User.new(
-        name: params[:name],
-        surname: params[:surname],
-        dni: params[:dni],
-        email: params[:email],
-        password: params[:password],
-        rol: params[:rol]
-      )
-      @new_user.admin = params['type'] == 'Administrador'
-      @new_user.save
-    rescue ArgumentError => e
-      redirect '/profile'
-    end
+    type = params['type'] == 'Administrador'
+    @user  = { 'name' => params[:name],
+               'surname' => params[:surname],
+               'dni' => params[:dni],
+               'email' => params[:email],
+               'password' => params[:password],
+               'rol' => params[:rol],
+               'admin' => type }
+    UserService.create_user(@user)
     redirect '/profile'
+  rescue ArgumentError => e
+    return erb :error, locals: { errorMessage: e.message,
+                                 url: '/',
+                                 document: Document.order(:date).reverse.all }
   end
 
   get '/profile' do

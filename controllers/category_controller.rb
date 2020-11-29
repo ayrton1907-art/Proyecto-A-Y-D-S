@@ -17,45 +17,29 @@ class CategoryController < BeforeController
   end
 
   post '/create_category' do
-    begin
-      CategoryService.revisar_datos(params[:name], params[:description])
-      category = Category.new(
-        name: params[:name],
-        description: params[:description]
-      )
-      [500, {}, 'Internal Server Error'] unless category.save
-    rescue ArgumentError
-      erb :all_category, layout: @current_layout
-    end
+    CategoryService.crear_categoria(params[:name], params[:description])
     redirect '/all_category'
+  rescue ArgumentError => e
+    return erb :error, locals: { errorMessage: e.message,
+                                 url: '/all_category',
+                                 all_categories: Category.order(:name).all }
   end
 
   post '/modify_category' do
-    begin
-      CategoryService.revisar_datos(params[:name], params[:description])
-      @category_update = Category.find(id: params[:modify_id])
-      @category_update&.update(
-        name: params[:name],
-        description: params[:description]
-      )
-    rescue ArgumentError
-      erb :all_category, layout: @current_layout
-    end
+    CategoryService.modificar_categoria(params[:name], params[:description], params[:modify_id])
     redirect '/all_category'
+  rescue ArgumentError => e
+    return erb :error, locals: { errorMessage: e.message,
+                                 url: '/all_category',
+                                 all_categories: Category.order(:name).all }
   end
 
   post '/delete_category' do
-    @category_delete = Category.find(id: params['id_delete'])
-    @category_selected = Category.find(id: params['id_select'])
-    @document = Document.where(category_id: @category_delete.id)
-    @document.each do |element|
-      element.update(category_id: @category_selected.id)
-    end
-    @all_docs = Document.where(category_id: @category_delete.id)
-    if @all_docs.empty?
-      @category_delete.remove_all_users
-      @category_delete.delete
-    end
+    CategoryService.eliminar_categoria(params['id_delete'], params['id_select'])
     redirect '/all_category'
+  rescue ArgumentError => e
+    return erb :error, locals: { errorMessage: e.message,
+                                 url: '/all_category',
+                                 all_categories: Category.order(:name).all }
   end
 end

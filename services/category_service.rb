@@ -7,11 +7,37 @@ require './models/init'
 
 # Service para categorias
 class CategoryService
-  def self.revisar_datos(nombre, description)
-    raise ArgumentError, 'Ya existe una categoria con ese nombre' if Category.find(name: nombre)
-    raise ArgumentError, 'Nombre demasiado corto' if nombre.length < 3
-    raise ArgumentError, 'Nombre demasiado corto' if nombre.length > 50
-    raise ArgumentError, 'Descripción demasiado corta' if description.length < 3
-    raise ArgumentError, 'descripción demasiado corto' if description.length > 300
+  def self.crear_categoria(nombre, descripcion)
+    return raise ArgumentError, 'Ya existe una categoria con ese nombre' unless Category.find(name: nombre)
+    @category = Category.new(name: nombre, description: descripcion)
+    return raise ArgumentError, 'La categoria no fue creada' unless @category.save
+  end
+
+  def self.modificar_categoria(nombre, description, id)
+    @old_cat = Category.find(id: id)
+    return raise ArgumentError, 'Categoria no encontrada' unless @old_cat
+      @cat_modify = @old_cat
+      @cat_modify.update(name: nombre,
+                         description: description)
+      if @old_cat.name == @cat_modify && @old_cat.description == @cat_modify.description
+        raise ArgeumentError, 'La categoria no fue modificada'
+      end
+  end
+
+  def self.eliminar_categoria(id_cat_eliminar, id_nueva_categoria)
+    @category_delete = Category.find(id: id_cat_eliminar)
+    @category_selected = Category.find(id: id_nueva_categoria)
+    raise ArgeumentError, 'No se encontro la categoria a eliminar' unless @category_delete
+    raise ArgumentError, 'No se encontro la categoria para migrar' unless @category_selected
+
+    @document = Document.where(category_id: @category_delete.id)
+    @document.each do |element|
+      element.update(category_id: @category_selected.id)
+    end
+    @all_docs = Document.where(category_id: @category_delete.id)
+    if @all_docs.empty?
+      @category_delete.remove_all_users
+      @category_delete.delete
+    end
   end
 end
