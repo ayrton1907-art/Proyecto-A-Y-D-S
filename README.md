@@ -1,6 +1,6 @@
 # Description
 
-This is a sample readme file 
+This is a sample readme file
 
 # Usage
 
@@ -11,11 +11,11 @@ This is a sample readme file
 
 # Authors
 
+* Ayrton Lopez
+* Juan Pablo Bortol
+* Nicola Rafti
+
 ## Core
 
   * SE UNRC
   * SE UNRC 2
-
-# Licence
-(link)[licence]
-
