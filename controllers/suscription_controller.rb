@@ -21,6 +21,7 @@ class SuscriptionController < BeforeController
   post '/delete_subcriptions' do
     @subscription_to_delete = Category.find(id: params[:idSubcriptions])
     @current_user.remove_category(@subscription_to_delete)
+    redirect '/subscriptions'
   end
 
   post '/new_suscription' do

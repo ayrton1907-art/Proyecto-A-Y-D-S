@@ -60,6 +60,7 @@ class UserController < BeforeController
     @current_user.update(name: params[:name]) if params[:name] != ''
     @current_user.update(surname: params[:surname]) if params[:surname] != ''
     @current_user.update(dni: params[:dni]) if params[:dni] != ''
+    @current_user.update(email: params[:email]) if params[:email] != ''
     @current_user.update(password: params[:password]) if params[:password] != ''
     @current_user.update(rol: params[:rol]) if params[:rol] != ''
     redirect '/profile'

@@ -8,7 +8,7 @@ require './models/init'
 # Service para categorias
 class CategoryService
   def self.crear_categoria(nombre, descripcion)
-    return raise ArgumentError, 'Ya existe una categoria con ese nombre' unless Category.find(name: nombre)
+    return raise ArgumentError, 'Ya existe una categoria con ese nombre' unless Category.find(name: nombre) == nil
 
     @category = Category.new(name: nombre, description: descripcion)
     return raise ArgumentError, 'La categoria no fue creada' unless @category.save
@@ -16,7 +16,7 @@ class CategoryService
 
   def self.modificar_categoria(nombre, description, id)
     @old_cat = Category.find(id: id)
-    return raise ArgumentError, 'Categoria no encontrada' unless @old_cat
+    return raise ArgumentError, 'Categoria no encontrada' unless @old_cat != nil
 
     @cat_modify = @old_cat
     @cat_modify.update(name: nombre,

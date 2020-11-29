@@ -29,11 +29,11 @@ class DocumentService
                              fileDocument: direction_document,
                              category_id: @chosen_category.id,
                              date: Time.now.strftime('%Y-%m-%d'))
-    @doc_saved = save_document(@doc_save)
+    @doc_saved = guardar_base_documento(@doc_save)
     @doc_saved
   end
 
-  def save_document(documento)
+  def self.guardar_base_documento(documento)
     documento.save
     unless Document.find(id: documento.id)
       raise ArgumentError, 'El Documento no se creo correctamente,' \
@@ -45,21 +45,22 @@ class DocumentService
   def self.edit_document(the_id, new_name, description, category)
     return raise ArgumentError, 'El Documento no se modifico correctamente' unless Document.find(id: the_id)
 
-    @document_modify = Document.find(id: the_id)
-    @document_modify.update(name: new_name) if new_name != ''
-    @document_modify.update(description: description) if description != ''
-    @document_modify.update(category_id: category) if category
-    @document_modify.remove_all_users
-    delete_notification(@document_notify)
-    @document_modify
-  end
-
-  def self.delete_notification(documento)
-    @notification_delete = Notification.where(document_id: documento.id).all
+    @document_modify = modificar(the_id, new_name, description, category)
+    @notification_delete = Notification.where(document_id: @document_modify.id).all
     @notification_delete&.each do |element|
       element.remove_all_users
       element.delete
     end
+    @document_modify
+  end
+
+  def self.modificar(id, new_name, description, category)
+    @document_modify = Document.find(id: id)
+    @document_modify.update(name: new_name) if new_name != ''
+    @document_modify.update(description: description) if description != ''
+    @document_modify.update(category_id: category) if category
+    @document_modify.remove_all_users
+    @document_modify
   end
 
   def self.select_user_tag(users_tagged, category_id, document_id)
