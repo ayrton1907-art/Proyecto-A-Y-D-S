@@ -108,7 +108,7 @@
     <% end %>
   </div>
   <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light modal-trigger  red z-depth-3" href="#modal1"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light modal-trigger red z-depth-3" href="#modal1"><i class="material-icons">add</i></a>
   </div>
   <div id="modal1" class="modal">
     <form id="form" method="post" action="create_document" enctype="multipart/form-data">
@@ -119,14 +119,14 @@
       <div class="modal-content">
         <div class="form-group">
           <label class="black-text" >Nombre del documento:</label>
-          <input id="input" type="text" name="name" required>
+          <input id="nombre" type="text" name="name" minlength="3" maxlength="1000">
         </div>
         <div class="form-group">
           <label class="black-text">Descripcion del documento:</label>
-          <input type="text" name="description" required>
+          <input type="text" name="description" required minlength="3" maxlength="1000">
         </div>
         <div class="form-group">
-          <select  class="form-control mi-selector validate" name='category' >
+          <select  class="form-control mi-selector validate" name='category'>
             <option value="" disabled selected>Elija la categoria</option>
             <%@all_categories && @all_categories.each do |element| %>
             <option value='<%= element.id%>'><%= element.name%></option>

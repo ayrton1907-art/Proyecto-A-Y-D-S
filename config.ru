@@ -22,5 +22,5 @@ DB = Sequel.connect(
 
 # Require and run the main app
 Sequel::Model.plugin :json_serializer
-require './app.rb'
+require './app'
 run App

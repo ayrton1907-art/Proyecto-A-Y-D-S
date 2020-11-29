@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require File.expand_path '../test_helper.rb', __dir__
+
+# Tests para users
 class UserTest < MiniTest::Unit::TestCase
   MiniTest::Unit::TestCase
 
@@ -33,7 +35,7 @@ class UserTest < MiniTest::Unit::TestCase
     assert_equal @cat.valid?, false
   end
 
-  def test_fileDocument_nil
+  def test_file_document_nil
     @doc = Document.create(
       name: 'DocPepito1',
       description: 'DescriptionEstandar1',
