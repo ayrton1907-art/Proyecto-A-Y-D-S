@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-10-17" view-index="0" gantt-divider-location="246" resource-divider-location="300" version="2.8.11" locale="es_AR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-08-31" view-index="0" gantt-divider-location="420" resource-divider-location="300" version="2.8.11" locale="es_AR">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Nombre" width="119" order="0"/>
-        <field id="tpd4" name="Fecha de inicio" width="54" order="1"/>
-        <field id="tpd5" name="Fecha de fin" width="54" order="2"/>
-        <option id="color.recent"><![CDATA[#cc0000 #cc0033 #ff0033]]></option>
+        <field id="tpd3" name="Nombre" width="177" order="0"/>
+        <field id="tpd4" name="Fecha de inicio" width="112" order="1"/>
+        <field id="tpd5" name="Fecha de fin" width="112" order="2"/>
+        <option id="color.recent">
+            <![CDATA[#cc0000 #cc0033 #ff0033]]>
+        </option>
     </view>
     <view id="resource-table">
         <field id="0" name="Nombre" width="210" order="0"/>
@@ -34,7 +36,9 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="11" name="Revisar los test" color="#8cb6ce" meeting="false" start="2020-09-04" duration="1" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true"/>
+        <task id="11" name="Revisar los test" color="#8cb6ce" meeting="false" start="2020-09-04" duration="1" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+            <depend id="30" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="0" name="Revisar Get y Post" color="#8cb6ce" meeting="false" start="2020-09-03" duration="1" complete="0" thirdDate="2020-10-16" thirdDate-constraint="0" expand="true">
             <depend id="11" type="2" difference="0" hardness="Strong"/>
         </task>
@@ -42,21 +46,31 @@
             <depend id="0" type="2" difference="0" hardness="Strong"/>
             <depend id="6" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="6" name="Mejorar Websocket" color="#8cb6ce" meeting="false" start="2020-09-03" duration="5" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true"/>
-        <task id="9" name="Diseño de interfaz" color="#8cb6ce" meeting="false" start="2020-08-31" duration="10" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+        <task id="6" name="Mejorar Websocket" color="#8cb6ce" meeting="false" start="2020-09-03" duration="5" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="30" name="Implementacion de interfaz" color="#8cb6ce" meeting="false" start="2020-09-14" duration="10" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
-            <depend id="47" type="2" difference="0" hardness="Strong"/>
-        </task>
-        <task id="32" name="Funcion (Filtro con DNI)" color="#8cb6ce" meeting="false" start="2020-09-16" duration="5" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true"/>
-        <task id="36" name="Informacion sobre nosotros" color="#8cb6ce" meeting="false" start="2020-09-14" duration="2" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
-            <depend id="32" type="2" difference="0" hardness="Strong"/>
+        <task id="9" name="Diseño de interfaz" color="#8cb6ce" meeting="false" start="2020-08-31" duration="10" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+            <depend id="30" type="2" difference="0" hardness="Strong"/>
             <depend id="33" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="33" name="Mejorar SRS" color="#8cb6ce" meeting="false" start="2020-09-16" duration="3" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true"/>
+        <task id="30" name="Implementacion de interfaz" color="#8cb6ce" meeting="false" start="2020-09-14" duration="10" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+            <depend id="46" type="2" difference="0" hardness="Strong"/>
+            <depend id="47" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="33" name="Mejorar SRS" color="#8cb6ce" meeting="false" start="2020-09-14" duration="3" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+            <depend id="36" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="32" name="Funcion (Filtro con DNI)" color="#8cb6ce" meeting="false" start="2020-09-17" duration="5" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+            <depend id="46" type="2" difference="0" hardness="Strong"/>
+            <depend id="47" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="36" name="Informacion sobre nosotros" color="#8cb6ce" meeting="false" start="2020-09-17" duration="2" complete="0" thirdDate="2020-08-31" thirdDate-constraint="0" expand="true">
+            <depend id="46" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="47" name="Terminar Interfaz" color="#8cb6ce" meeting="false" start="2020-09-28" duration="8" complete="0" thirdDate="2020-09-28" thirdDate-constraint="0" expand="true">
             <depend id="45" type="2" difference="0" hardness="Strong"/>
+            <depend id="61" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="46" name="Mejorar filtros" color="#8cb6ce" meeting="false" start="2020-09-28" duration="5" complete="0" thirdDate="2020-09-21" thirdDate-constraint="0" expand="true">
             <depend id="45" type="2" difference="0" hardness="Strong"/>
@@ -64,7 +78,6 @@
         <task id="45" name="Hacer merge" color="#cc0000" meeting="false" start="2020-10-08" duration="2" complete="0" thirdDate="2020-09-21" thirdDate-constraint="0" expand="true">
             <depend id="60" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="44" name="Manual de usuario" color="#8cb6ce" meeting="false" start="2020-10-20" duration="3" complete="0" thirdDate="2020-09-21" thirdDate-constraint="0" expand="true"/>
         <task id="60" name="Instalar Rubocop" color="#cc0000" meeting="false" start="2020-10-12" duration="1" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
             <depend id="65" type="2" difference="0" hardness="Strong"/>
         </task>
@@ -72,29 +85,54 @@
             <depend id="67" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="67" name="Modificar largo de lineas de codigo" color="#cc0000" meeting="false" start="2020-10-14" duration="2" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true"/>
-        <task id="61" name="Revisar smell codes" color="#cc0000" meeting="false" start="2020-10-06" duration="6" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
-            <notes><![CDATA[
-]]></notes>
+        <task id="61" name="Revisar smell codes" color="#cc0000" meeting="false" start="2020-10-08" duration="6" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[
+]]>
+            </notes>
             <depend id="62" type="2" difference="0" hardness="Strong"/>
             <depend id="68" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="62" name="Refactorizar smell codes" color="#cc0000" meeting="false" start="2020-10-14" duration="4" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
-            <notes><![CDATA[2 hs (Diarias)]]></notes>
-        </task>
-        <task id="68" name="Realizar informe" color="#cc0000" meeting="false" start="2020-10-14" duration="3" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
+        <task id="62" name="Refactorizar smell codes" color="#cc0000" meeting="false" start="2020-10-16" duration="4" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[2 hs (Diarias)]]>
+            </notes>
             <depend id="70" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="70" name="Cronograma demo" color="#8cb6ce" meeting="false" start="2020-10-19" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
-        <task id="69" name="Realizar Diagramas de metricas" color="#8cb6ce" meeting="false" start="2020-10-20" duration="3" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true"/>
+        <task id="68" name="Realizar informe" color="#cc0000" meeting="false" start="2020-10-16" duration="3" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
+            <depend id="70" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="70" name="Cronograma demo" color="#8cb6ce" meeting="false" start="2020-10-22" duration="2" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true">
+            <depend id="81" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="81" name="Analizar el código para refactorizar" color="#8cb6ce" meeting="false" start="2020-10-26" duration="2" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
             <depend id="79" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="79" name="Definir clases y estructuras" color="#8cb6ce" meeting="false" start="2020-10-28" duration="3" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
             <depend id="78" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="78" name="Organizar definiciones de validación" color="#8cb6ce" meeting="false" start="2020-11-02" duration="5" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true"/>
-        <task id="72" name="Realizar diagramas de métricas" color="#8cb6ce" meeting="false" start="2020-10-26" duration="3" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true"/>
-        <task id="92" name="Realizar manual de usuario" color="#8cb6ce" meeting="false" start="2020-10-26" duration="3" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true"/>
+        <task id="78" name="Organizar definiciones de validación" color="#8cb6ce" meeting="false" start="2020-11-02" duration="5" complete="0" thirdDate="2020-10-12" thirdDate-constraint="0" expand="true">
+            <depend id="93" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="93" name="Solucionar el problema del before" color="#8cb6ce" meeting="false" start="2020-11-09" duration="3" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true">
+            <depend id="101" type="2" difference="0" hardness="Strong"/>
+            <depend id="113" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="101" name="Terminar la C.Service" color="#8cb6ce" meeting="false" start="2020-11-12" duration="3" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true">
+            <depend id="94" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="113" name="Terminar C.Controller" color="#8cb6ce" meeting="false" start="2020-11-12" duration="3" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true">
+            <depend id="94" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="94" name="Implemetar el tratado de errores del usuario" color="#8cb6ce" meeting="false" start="2020-11-17" duration="3" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true">
+            <depend id="104" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="104" name="Ultima pasada de rubocop" color="#8cb6ce" meeting="false" start="2020-11-20" duration="3" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true">
+            <depend id="98" type="2" difference="0" hardness="Strong"/>
+            <depend id="102" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="98" name="Preparar Proyecto para Preentacion" color="#8cb6ce" meeting="false" start="2020-11-25" duration="1" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true"/>
+        <task id="102" name="Preentacion" color="#8cb6ce" meeting="false" start="2020-11-25" duration="3" complete="0" thirdDate="2020-10-20" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Juan Pablo Bortol" function="Default:0" contacts="" phone=""/>
@@ -114,14 +152,12 @@
         <allocation task-id="45" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="60" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="65" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
-        <allocation task-id="69" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="62" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="68" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="70" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="81" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="79" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="78" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="92" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="6" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="32" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="46" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
@@ -135,7 +171,6 @@
         <allocation task-id="81" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="79" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="78" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="72" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
     </allocations>
     <vacations/>
     <previous/>
